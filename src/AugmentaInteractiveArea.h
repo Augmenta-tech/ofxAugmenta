@@ -1,30 +1,31 @@
-//
-//  AugmentaInteractiveArea.h
-//  Augmenta_2D
-//
-//  Created by Theoriz-MacMini on 5/5/15.
-//
-//
+/***************************************************************************
+ *
+ *  Augmenta::AugmentaInteractiveArea.h
+ *
+ ***************************************************************************/
 
-#ifndef __Augmenta_2D__AugmentaInteractiveArea__
-#define __Augmenta_2D__AugmentaInteractiveArea__
+#ifndef AUGMENTA_INTERACTIVE_AREA_H
+#define AUGMENTA_INTERACTIVE_AREA_H
 
-#include <iostream>
 #include "ofMain.h"
-
-#endif /* defined(__Augmenta_2D__AugmentaInteractiveArea__) */
 
 namespace Augmenta {
     
     class InteractiveArea {
+        
     public:
-        ofRectangle area;
         
         InteractiveArea();
+        
+        void draw();
+        
         void set(float x, float y, float width, float height);
         bool contains(ofPoint p);
+
+    private:
         
-        /** Draw a debug view */
-        void draw();
+        ofRectangle area;
     };
 }
+
+#endif // AUGMENTA_INTERACTIVE_AREA_H

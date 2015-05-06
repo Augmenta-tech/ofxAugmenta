@@ -1,66 +1,101 @@
 #include "testApp.h"
 
+#define OSC_PORT 12000
+
 //--------------------------------------------------------------
 void testApp::setup(){
-    ofBackground(0);
-    auReceiver.connect( 12000 );
     
-    // this will add listeners to your app; this is optional!
-    // you will need to add all three of these functions to do this:
-    // void onPersonEntered( Augmenta::EventArgs & tspsEvent );
-    // void onPersonUpdated( Augmenta::EventArgs & tspsEvent );
-    // void onPersonWillLeave( Augmenta::EventArgs & tspsEvent );
+    // Init
+    
+    m_bDebug = false;
+    m_MouseClick.x = 0.0f;
+    m_MouseClick.y = 0.0f;
+    
+    ofBackground(ofColor::black);
+    m_auReceiver.connect(OSC_PORT);
+    
+    /***********************************************************
+     
+     This will add listeners to your app. This is optional!
+     You will need to add all three of these functions to do this:
+     void onPersonEntered( Augmenta::EventArgs & augmentaEvent );
+     void onPersonUpdated( Augmenta::EventArgs & augmentaEvent );
+     void onPersonWillLeave( Augmenta::EventArgs & augmentaEvent );
+     
+     ***********************************************************/
     
     ofxAddAugmentaListeners(this);
 }
 
 //--------------------------------------------------------------
 void testApp::update(){
-    // here, you can loop through each person and do stuff
-    vector<Augmenta::Person*> people = auReceiver.getPeople();
-    for ( int i=0; i<people.size(); i++){
-        // do stuff for each person!
-        //people[i]->contour...
+    
+    // Get the person data
+    vector<Augmenta::Person*> people = m_auReceiver.getPeople();
+    
+    // For each person...
+    for (int i=0; i<people.size(); i++){
+
+        // You can do stuff here :)
     }
 }
 
 //--------------------------------------------------------------
 void testApp::draw(){
-    // debug draw!	
-    auReceiver.draw(ofGetWidth(), ofGetHeight());
-    if(debug){
-        auReceiver.interactiveArea.draw();
+    
+    // Get the person data
+    vector<Augmenta::Person*> people = m_auReceiver.getPeople();
+    
+    // You can draw stuff here !
+    ofPushStyle();
+    ofSetColor(ofColor::blue);
+    for(int i=0; i<people.size(); ++i) {
+        ofCircle(people[i]->centroid.x* ofGetWidth(), people[i]->centroid.y* ofGetHeight(), 10);
+    }
+    ofPopStyle();
+    
+    // Draw the interactive area
+    if(m_bDebug){
+        
+        // Draw debug data
+        m_auReceiver.getInteractiveArea()->draw();
+        m_auReceiver.draw(ofGetWidth(), ofGetHeight());
     }
 }
 
 //--------------------------------------------------------------
 void testApp::onPersonEntered( Augmenta::EventArgs & augmentaEvent ){
+    
     ofLog(OF_LOG_NOTICE, "New person!");
-    // you can access the person like this:
-    // tspsEvent.person
+    
+    // You can access the person like this :
+    // augmentaEvent.person
 }
 
 //--------------------------------------------------------------
 void testApp::onPersonUpdated( Augmenta::EventArgs & augmentaEvent ){
-    ofLog(OF_LOG_NOTICE, "Person updated!");
-    // you can access the person like this:
-    // tspsEvent.person
     
+    ofLog(OF_LOG_NOTICE, "Person updated!");
+    
+    // You can access the person like this :
+    // augmentaEvent.person
 }
 
 //--------------------------------------------------------------
 void testApp::onPersonWillLeave( Augmenta::EventArgs & augmentaEvent ){
-    ofLog(OF_LOG_NOTICE, "Person left!");
-    // you can access the person like this:
-    // tspsEvent.person
     
+    ofLog(OF_LOG_NOTICE, "Person left!");
+
+    // You can access the person like this :
+    // augmentaEvent.person
 }
 
 //--------------------------------------------------------------
 void testApp::keyPressed(int key){
-    //std::cout << key << std::endl;
-    if(key == 100){
-        debug = !debug;
+
+    if(key == 'd' || key == 'D'){
+        
+        m_bDebug = !m_bDebug;
     }
 }
 
@@ -76,32 +111,42 @@ void testApp::mouseMoved(int x, int y){
 
 //--------------------------------------------------------------
 void testApp::mouseDragged(int x, int y, int button){
-    if (debug){
+    
+    if (m_bDebug){
+        
+        // Set interactive area size
         if (button == 0){
-            float w = (float)x/(float)ofGetWidth()-originX;
-            float h = (float)y/(float)ofGetHeight()-originY;
+            float w = (float)x/(float)ofGetWidth()-m_MouseClick.x;
+            float h = (float)y/(float)ofGetHeight()-m_MouseClick.y;
+            
             if (w > 0 && h > 0){
-                auReceiver.interactiveArea.set(originX, originY, w, h);
+                m_auReceiver.getInteractiveArea()->set(m_MouseClick.x, m_MouseClick.y, w, h);
             } else if (w < 0 && h > 0){
-                auReceiver.interactiveArea.set((float)x/(float)ofGetWidth(), originY, -w, h);
+                m_auReceiver.getInteractiveArea()->set((float)x/(float)ofGetWidth(), m_MouseClick.y, -w, h);
             } else if (h < 0 && w > 0){
-                auReceiver.interactiveArea.set(originX, (float)y/(float)ofGetHeight(), w, -h);
+                m_auReceiver.getInteractiveArea()->set(m_MouseClick.x, (float)y/(float)ofGetHeight(), w, -h);
             } else {
-                auReceiver.interactiveArea.set((float)x/(float)ofGetWidth(), (float)y/(float)ofGetHeight(), -w, -h);
+                m_auReceiver.getInteractiveArea()->set((float)x/(float)ofGetWidth(), (float)y/(float)ofGetHeight(), -w, -h);
             }
-            //std::cout << "Rect : " << auReceiver.interactiveArea.area.x << " " << auReceiver.interactiveArea.area.y << " " << auReceiver.interactiveArea.area.x+auReceiver.interactiveArea.area.width << " " << auReceiver.interactiveArea.area.y+auReceiver.interactiveArea.area.height << std::endl;
         }
     }
 }
 
 //--------------------------------------------------------------
 void testApp::mousePressed(int x, int y, int button){
-    if (debug){
-        if (button == 0){
-            originX = (float)x/(float)ofGetWidth();
-            originY = (float)y/(float)ofGetHeight();
+
+    if (m_bDebug){
+        
+        // Left Click
+        if (button == OF_MOUSE_BUTTON_1){
+            
+            // Save origin mouse click
+            m_MouseClick.x = (float)x/(float)ofGetWidth();
+            m_MouseClick.y = (float)y/(float)ofGetHeight();
         } else {
-            auReceiver.interactiveArea.set(0.0f, 0.0f, 1.0f, 1.0f);
+
+            // Reset interactive area to full window
+            m_auReceiver.getInteractiveArea()->set(0.0f, 0.0f, 1.0f, 1.0f);
         }
     }
 }

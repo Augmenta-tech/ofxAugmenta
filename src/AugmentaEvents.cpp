@@ -1,6 +1,5 @@
 /*
  *  Events.cpp
- *  
  */
 
 #include "AugmentaEvents.h"

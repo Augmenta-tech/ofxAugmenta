@@ -4,7 +4,9 @@
 #include "AugmentaReceiver.h"
 
 class testApp : public ofBaseApp{
-	public:
+	
+    public:
+    
 		void setup();
 		void update();
 		void draw();
@@ -18,13 +20,17 @@ class testApp : public ofBaseApp{
 		void windowResized(int w, int h);
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
-        
-        Augmenta::Receiver auReceiver;
-        bool debug = false;
-        float originX = 0.0f, originY = 0.0f;
     
         // event listeners
         void onPersonEntered( Augmenta::EventArgs & augmentaEvent );
         void onPersonUpdated( Augmenta::EventArgs & augmentaEvent );
         void onPersonWillLeave( Augmenta::EventArgs & augmentaEvent );
+    
+    private:
+    
+        Augmenta::Receiver m_auReceiver;
+    
+        bool m_bDebug;
+        ofPoint m_MouseClick;
+
 };

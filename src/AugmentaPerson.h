@@ -1,64 +1,97 @@
 /***************************************************************************
  *
- *  Augmenta::Person.h
+ *  Augmenta::AugmentaPerson.h
  *
  ***************************************************************************/
 
-#ifndef OFX_PERSON_OBJECT
-#define OFX_PERSON_OBJECT
+#ifndef AUGMENTA_PERSON_H
+#define AUGMENTA_PERSON_H
 
 #include "ofMain.h"
 
+/*
+ 
+ Get latest protocol up-to-date here : https://github.com/Theoriz/Augmenta/wiki
+ 
+ Copied here (for reference only) :
+ 
+ ////////////////////////////////////////////////////////////////////////////////////////////////////////
+ 
+     * Augmenta OSC Protocol :
+     
+     /au/personWillLeave args0 arg1 ... argn
+     /au/personUpdated   args0 arg1 ... argn
+     /au/personEntered   args0 arg1 ... argn
+     
+     where args are :
+     
+     
+     0: pid (int)                        // Personal ID ex : 42th person to enter stage has pid=42
+     1: oid (int)                        // Ordered ID ex : if 3 person on stage, 43th person has oid=2
+     2: age (int)                        // Time on stage (in frame number)
+     3: centroid.x (float)               // Position projected to the ground
+     4: centroid.y (float)
+     5: velocity.x (float)               // Speed and direction vector
+     6: velocity.y (float)
+     7: depth (float)                    // Distance to sensor (in m)
+     8: boundingRect.x (float)           // Bounding box on the ground
+     9: boundingRect.y (float)
+     10: boundingRect.width (float)
+     11: boundingRect.height (float)
+     12: highest.x (float)               // Highest point placement
+     13: highest.y (float)
+     14: highest.z (float)               // Height
+     
+     /au/scene   args0 arg1 ... argn
+     
+     0: currentTime (int)                // Time (in frame number)
+     1: percentCovered (float)           // Percent covered
+     2: numPeople (int)                  // Number of person
+     3: averageMotion.x (float)          // Average motion
+     4: averageMotion.y (float)
+     5: scene.width (int)                // Scene size
+     6: scene.height (int)
+ 
+////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+
 namespace Augmenta {
+    
     class Person {
-	public: 
-		/** Unique ID, different for each Person as long as Augmenta is running */
-        int id;
-		/** Ordered ID (not usually used), ID ranging from 0-Total Number of people */
-        int oid;
-        /** How long a person has been around (in seconds) */
-		int age;
-        /** Normalized (0.0-1.0) distance from camera. For Kinect camera, highest value (1) is approx. 10 meters*/
-        float depth;
-		/** Center of mass of person */
-		ofPoint centroid;
-        /** Speed since last update */
-        ofPoint velocity;
-        /** Closest point to the camera (with Kinect). If using non-depth camera, represents brightest point on person. */
-        ofPoint highest;
-        ofPoint lowest;
-        /** Average motion within a Person's area */
-        ofPoint opticalFlow;
-        /** Bounding rectangle that surrounds Person's shape*/
-		ofRectangle boundingRect;
-        /** Rectangle representing a detected HAAR feature (if there is one) */
-		ofRectangle haarRect;
-        /** Defines the rough outline of a Person*/
-		ofPolyline contour;
-        /** Defines the simplified outline of a Person*/
-		ofPolyline simpleContour;
-        /** Time remaining relative to receiver's timeout*/
-        int timeRemaining; 
         
-		float area; //area as a scalar size
+	public:
         
+        // Methods
         Person();
         Person(int _id, int _oid, int _age, float _depth, ofPoint _centroid, ofPoint _velocity, ofRectangle _boundingRect, float _highestX, float _highestY, float _highestZ);
         Person( int pid, int oid );
 		~Person();
-		
+        
         virtual void update();
-        virtual void updateBoundingRect( ofRectangle _rect );
-        virtual void updateCentroid( ofPoint _centroid, bool dampen );
-        virtual void updateContour( ofPolyline _contour );
+        virtual void draw(int _width, int _height);
         
-        virtual void draw( int cameraWidth, int cameraHeight, bool bSendContours=false);
+        // Getter
+        inline int getRemainingtime() {return timeRemaining;}
+        inline void updateRemainingTime() {timeRemaining--;}
         
-		//this can be a pointer to whatever you want to store in this person
-		void* customAttributes;
+        // Setter
+        inline void setRemainingtime(int _timeRemaining) {timeRemaining = _timeRemaining;}
+        virtual void setBoundingRect( ofRectangle _rect );
+        virtual void setCentroid( ofPoint _centroid, bool dampen );
         
-		
+        // Members
+        int pid;
+        int oid;
+		int age;
+		ofPoint centroid;
+        ofPoint velocity;
+        float depth; // Not implemented yet
+		ofRectangle boundingRect;
+        ofPoint highest;
+
+    private:
+        
+        int timeRemaining;
     };
 }
 
-#endif
+#endif // AUGMENTA_PERSON_H

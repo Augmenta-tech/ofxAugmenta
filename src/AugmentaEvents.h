@@ -1,13 +1,16 @@
-//
-//  Augmenta::Events.h
-//
-//
+/***************************************************************************
+ *
+ *  Augmenta::AugmentaEvents.h
+ *
+ ***************************************************************************/
 
-#pragma once
+#ifndef AUGMENTA_EVENTS_H
+#define AUGMENTA_EVENTS_H
 
 #include "ofMain.h"
 
 namespace Augmenta {
+    
     class Person;
     class Scene;
     
@@ -16,8 +19,8 @@ namespace Augmenta {
         
 		EventArgs(){};
 
-        Person   * person;
-        Scene    * scene;
+        Person* person;
+        Scene* scene;
     };
     
     class CustomEventArgs {
@@ -73,3 +76,5 @@ template<class ListenerClass>
 void ofxRemoveAugmentaCustomEventListener( ListenerClass * listener ){
     ofRemoveListener(Augmenta::Events().customEvent, listener, &ListenerClass::onCustomEvent);
 }
+
+#endif // AUGMENTA_EVENTS_H

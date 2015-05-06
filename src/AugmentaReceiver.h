@@ -1,12 +1,14 @@
-//
-//  AugmentaReceiver.h
-//  
-//
+/***************************************************************************
+ *
+ *  Augmenta::AugmentaReceiver.h
+ *
+ ***************************************************************************/
 
-
-#pragma once
+#ifndef AUGMENTA_RECEIVER_H
+#define AUGMENTA_RECEIVER_H
 
 #include "ofxOsc.h"
+
 #include "AugmentaEvents.h"
 #include "AugmentaPerson.h"
 #include "AugmentaScene.h"
@@ -14,12 +16,13 @@
 
 namespace Augmenta {
     
-    // update these if Augmenta core changes!
-    static const string PERSON_ENTERED  = "/au/personEntered";
-    static const string PERSON_UPDATED  = "/au/personUpdated";
-    static const string PERSON_LEAVING  = "/au/personWillLeave";
-    static const string SCENE_UPDATED   = "/au/scene";
-    static const string CUSTOM_EVENT    = "/au/customEvent";
+    // TODO : Remove trailing slash !!
+    
+    static const string PERSON_ENTERED  = "/au/personEntered/";
+    static const string PERSON_UPDATED  = "/au/personUpdated/";
+    static const string PERSON_LEAVING  = "/au/personWillLeave/";
+    static const string SCENE_UPDATED   = "/au/scene/";
+    static const string CUSTOM_EVENT    = "/au/customEvent/";
     
     enum ConnectionStatus
     {
@@ -32,39 +35,38 @@ namespace Augmenta {
     class Receiver : public ofxOscReceiver
     {
     public:
-        Receiver();
         
-        InteractiveArea interactiveArea;
+        Receiver();
         
         void connect( int port );
         void update( ofEventArgs &e );
         void draw( int width, int height );
-        
-        Person* personAtIndex(int i);
-        Person* personWithID(int pid);
-        Person* getOldestPerson();
-        
-        int totalPeople();
-        Scene* getScene();
-        vector<Person*> & getPeople();
-        
-        ofPoint getSceneSize();
-        
         void setTimeOut(int t);
         
-    protected:
-        ConnectionStatus status;
+        vector<Person*> & getPeople();
+        inline Scene* getScene() {return &scene;}
+        inline InteractiveArea* getInteractiveArea() {return &interactiveArea;}
+        Person* getOldestPerson();
+        Person* getNewestPerson();
         
-        /** All people tracked in the whole scene */
-        vector<Person*> trackedPeople;
-        /** Map of people in the interactive area, accessible by unique id */
-        map<int, Person*> currentPeople;
-        /** Array of people in the interactive area */
-        vector<Person*> currentPeopleArray;
-        
-        Scene scene;
-        int personTimeout;
-        
+    private:
+
         void updatePersonFromOSC( Person * p, ofxOscMessage & m );
+        
+        Person* getPersonAtIndex(int i);
+        Person* getPersonWithPID(int pid);
+        ofPoint getSceneSize();
+
+        InteractiveArea interactiveArea;
+        ConnectionStatus status;
+        Scene scene;
+        
+        vector<Person*> currentPeopleArray;         /** Array of people in the interactive area */
+        vector<Person*> trackedPeople;         /** All people tracked in the whole scene */
+        map<int, Person*> currentPeople;         /** Map of people in the interactive area, accessible by unique id */
+        
+        int personTimeout;
     };
 }
+
+#endif //AUGMENTA_RECEIVER_H
