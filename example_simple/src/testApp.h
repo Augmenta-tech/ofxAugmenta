@@ -32,5 +32,4 @@ class testApp : public ofBaseApp{
     
         bool m_bDebug;
         ofPoint m_MouseClick;
-
 };

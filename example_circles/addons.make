@@ -1,2 +1,2 @@
 ofxOsc
-ofxTSPSReceiver
+ofxAugmenta

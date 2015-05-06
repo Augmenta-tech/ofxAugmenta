@@ -14,16 +14,6 @@ void testApp::setup(){
     ofBackground(ofColor::black);
     m_auReceiver.connect(OSC_PORT);
     
-    /***********************************************************
-     
-     This will add listeners to your app. This is optional!
-     You will need to add all three of these functions to do this:
-     void onPersonEntered( Augmenta::EventArgs & augmentaEvent );
-     void onPersonUpdated( Augmenta::EventArgs & augmentaEvent );
-     void onPersonWillLeave( Augmenta::EventArgs & augmentaEvent );
-     
-     ***********************************************************/
-    
     ofxAddAugmentaListeners(this);
 }
 
@@ -49,7 +39,7 @@ void testApp::draw(){
     // You can draw stuff here !
     ofPushStyle();
     ofNoFill();
-    ofSetLineWidth(8);
+    ofSetLineWidth(4);
     ofSetColor(ofColor::blue);
     for(int i=0; i<people.size(); ++i) {
         ofCircle(people[i]->centroid.x* ofGetWidth(), people[i]->centroid.y* ofGetHeight(), 15);
@@ -59,9 +49,12 @@ void testApp::draw(){
     // Draw the interactive area
     if(m_bDebug){
         
+        ofDrawBitmapString("[drag mouse] to set interactive area\n[right click] to reset", ofPoint(10,10));
+        
         // Draw debug data
         m_auReceiver.getInteractiveArea()->draw();
         m_auReceiver.draw(ofGetWidth(), ofGetHeight());
+
     } else {
         ofDrawBitmapString("[d] to show debug", ofPoint(10,10));
     }
