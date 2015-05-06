@@ -1,6 +1,5 @@
 /*
- *  ofxTSPS::Scene.cpp
- *  TSPSPeopleVision
+ *  Augmenta::Scene.cpp
  *
  */
 
@@ -15,7 +14,8 @@ namespace Augmenta {
     //------------------------------------------------------------------------
     Scene::Scene():
     numPeople(0),
-    percentCovered(0),
+    percentCovered(0.0f),
+    averageMotion(ofPoint(0.0f, 0.0f)),
     gridX(0), gridY(0)
     {
         
@@ -23,7 +23,8 @@ namespace Augmenta {
     
     //------------------------------------------------------------------------
     void Scene::reset(){
-        percentCovered = 0;
+        percentCovered = 0.0f;
+        averageMotion = ofPoint(0.0f, 0.0f);
         numPeople = 0;
         for ( int i=0; i<activeGrid.size(); i++){
             activeGrid[i] = false;
@@ -125,17 +126,19 @@ namespace Augmenta {
         ofxOscMessage m;
         m.setAddress(address);
         m.addIntArg(ofGetElapsedTimeMillis());
-        m.addIntArg(numPeople);
         m.addFloatArg(percentCovered);
+        m.addIntArg(numPeople);
         m.addFloatArg(averageMotion.x);
         m.addFloatArg(averageMotion.y);
+        m.addIntArg(width);
+        m.addIntArg(height);
         
         // grid
-        m.addIntArg(gridX);
-        m.addIntArg(gridY);
-        for (int i=0; i<activeGrid.size(); i++){
+        //m.addIntArg(gridX);
+        //m.addIntArg(gridY);
+        /*for (int i=0; i<activeGrid.size(); i++){
             m.addIntArg(activeGrid[i]);
-        }
+        }*/
         return m;
     }
 #endif
@@ -144,18 +147,18 @@ namespace Augmenta {
     string Scene::getTCPMessage(){
         stringstream ss;
         ss<<"Augmenta/scene/"<<";";
-        ss<<"numPeople/"<<numPeople<<";";
         ss<<"percentCovered/"<<percentCovered<<";";
+        ss<<"numPeople/"<<numPeople<<";";
         ss<<"averageMotion/"<<averageMotion.x<<","<<averageMotion.y<<";";
-        ss<<"gridX/"<<gridX<<";";
-        ss<<"gridY/"<<gridY<<";";
-        ss<<"grid/";
+        ss<<"width/"<<width<<";";
+        ss<<"height/"<<height<<";";
+        /*ss<<"grid/";
         for (int i=0; i<activeGrid.size(); i++){
             ss<<activeGrid[i];
             if ( i + 1 < activeGrid.size() ){
                 ss<<",";
             }
-        }
+        }*/
         ss<<";";
         ss<<"\\";
         
@@ -166,16 +169,16 @@ namespace Augmenta {
     string Scene::getJSONMessge(){
         stringstream ss;
         ss<<"{\"type\":\"scene\",";
-        ss<<"\"numPeople\":\""<<numPeople<<"\",\"percentCovered\":\""<<percentCovered<<"\",";
+        ss<<"\"percentCovered\":\""<<percentCovered<<"\",\"numPeople\":\""<<numPeople<<"\",";
         ss<<"\"averageMotion\":{\"x\":\""<<averageMotion.x<<"\",\"y\":\""<<averageMotion.y<<"\"},";
-        ss<<"\"gridX\":\""<<gridX<<"\",\"gridY\":\""<<gridY<<"\",";
-        ss<<"\"grid\":[";
+        ss<<"\"width\":\""<<width<<"\",\"height\":\""<<height<<"\",";
+        /*ss<<"\"grid\":[";
         for (int i=0; i<activeGrid.size(); i++){
             ss<<activeGrid[i];
             if ( i + 1 < activeGrid.size() ){
                 ss<<",";
             }
-        }
+        }*/
         ss<<"]";
         ss<<"}";
         return ss.str();

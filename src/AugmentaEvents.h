@@ -1,9 +1,6 @@
 //
-//  ofxTSPS::Events.h
-//  openTSPS
+//  Augmenta::Events.h
 //
-//  Created by Brett Renfer on 7/15/12.
-//  Copyright (c) 2012 Robotconscience. All rights reserved.
 //
 
 #pragma once
@@ -41,13 +38,13 @@ namespace Augmenta {
         ofEvent<EventArgs> personEntered;
         
         //called one frame before the person is removed from the list to let you clean up
-        ofEvent<EventArgs>  personWillLeave;
+        ofEvent<EventArgs> personWillLeave;
         
         //called every frame no matter what.
-        ofEvent<EventArgs>  personUpdated;
+        ofEvent<EventArgs> personUpdated;
         
         //called when a custom event occurs.
-        ofEvent<CustomEventArgs>  customEvent;
+        ofEvent<CustomEventArgs> customEvent;
     };
     
     CoreEvents & Events();

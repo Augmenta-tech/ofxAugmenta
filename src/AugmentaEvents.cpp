@@ -1,6 +1,6 @@
 /*
  *  Events.cpp
- *  openTSPS
+ *  
  */
 
 #include "AugmentaEvents.h"

@@ -17,6 +17,7 @@
 		72a929d3561b8232a182abfcbb325491 /* ofxOscBundle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65eefa3da3526e9cdd9c21f90d9b5684 /* ofxOscBundle.cpp */; };
 		879a251454401bc0b6e4f238fc63135b /* OscTypes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = d9bffbbf4cc43dee890b3c3e8f7d792c /* OscTypes.cpp */; };
 		8f5205aef8861ef234f0651aba6be2ee /* ofxOscSender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 81967292bfc87a0144bd32c66f3adb20 /* ofxOscSender.cpp */; };
+		A31026911AF8E94700F4D959 /* AugmentaInteractiveArea.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A310268F1AF8E94700F4D959 /* AugmentaInteractiveArea.cpp */; };
 		A33B7C5C1AF8B035008F6D3D /* AugmentaEvents.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A33B7C541AF8B035008F6D3D /* AugmentaEvents.cpp */; };
 		A33B7C5D1AF8B035008F6D3D /* AugmentaPerson.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A33B7C561AF8B035008F6D3D /* AugmentaPerson.cpp */; };
 		A33B7C5E1AF8B035008F6D3D /* AugmentaReceiver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A33B7C581AF8B035008F6D3D /* AugmentaReceiver.cpp */; };
@@ -97,6 +98,8 @@
 		8c75afc8774a62495dd5346429f6f666 /* ofxOscReceiver.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxOscReceiver.h; path = ../../ofxOsc/src/ofxOscReceiver.h; sourceTree = SOURCE_ROOT; };
 		9bf3aa0d4faa89d0f8a0e545403162be /* OscReceivedElements.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = OscReceivedElements.cpp; path = ../../ofxOsc/libs/oscpack/src/osc/OscReceivedElements.cpp; sourceTree = SOURCE_ROOT; };
 		9f7986dc4eb05e75fce2c777500fdc01 /* ofxOscSender.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxOscSender.h; path = ../../ofxOsc/src/ofxOscSender.h; sourceTree = SOURCE_ROOT; };
+		A310268F1AF8E94700F4D959 /* AugmentaInteractiveArea.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AugmentaInteractiveArea.cpp; sourceTree = "<group>"; };
+		A31026901AF8E94700F4D959 /* AugmentaInteractiveArea.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AugmentaInteractiveArea.h; sourceTree = "<group>"; };
 		A33B7C541AF8B035008F6D3D /* AugmentaEvents.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AugmentaEvents.cpp; sourceTree = "<group>"; };
 		A33B7C551AF8B035008F6D3D /* AugmentaEvents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AugmentaEvents.h; sourceTree = "<group>"; };
 		A33B7C561AF8B035008F6D3D /* AugmentaPerson.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AugmentaPerson.cpp; sourceTree = "<group>"; };
@@ -226,6 +229,8 @@
 				A33B7C591AF8B035008F6D3D /* AugmentaReceiver.h */,
 				A33B7C5A1AF8B035008F6D3D /* AugmentaScene.cpp */,
 				A33B7C5B1AF8B035008F6D3D /* AugmentaScene.h */,
+				A310268F1AF8E94700F4D959 /* AugmentaInteractiveArea.cpp */,
+				A31026901AF8E94700F4D959 /* AugmentaInteractiveArea.h */,
 			);
 			name = src;
 			path = ../src;
@@ -477,6 +482,7 @@
 				A33B7C5F1AF8B035008F6D3D /* AugmentaScene.cpp in Sources */,
 				72a929d3561b8232a182abfcbb325491 /* ofxOscBundle.cpp in Sources */,
 				5864ad82e20f15536d054ea319473de3 /* ofxOscMessage.cpp in Sources */,
+				A31026911AF8E94700F4D959 /* AugmentaInteractiveArea.cpp in Sources */,
 				640279ee111671bd026cb0137d5b121e /* ofxOscReceiver.cpp in Sources */,
 				8f5205aef8861ef234f0651aba6be2ee /* ofxOscSender.cpp in Sources */,
 				ade367465d2a8ebad4c7a8d92a3ef718 /* IpEndpointName.cpp in Sources */,

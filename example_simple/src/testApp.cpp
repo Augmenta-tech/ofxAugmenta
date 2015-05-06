@@ -22,13 +22,11 @@ void testApp::update(){
         // do stuff for each person!
         //people[i]->contour...
     }
-    
-    std::cout << people.size() << std::endl;
 }
 
 //--------------------------------------------------------------
 void testApp::draw(){
-    // debug draw!
+    // debug draw!	
     receiver.draw(ofGetWidth(), ofGetHeight());
 }
 

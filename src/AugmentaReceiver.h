@@ -1,10 +1,8 @@
 //
-//  ofxTSPSReceiver.h
-//  TSPSReceiver
+//  AugmentaReceiver.h
+//  
 //
-//  Created by Brett Renfer on 11/1/12.
-//
-//
+
 
 #pragma once
 
@@ -12,11 +10,11 @@
 #include "AugmentaEvents.h"
 #include "AugmentaPerson.h"
 #include "AugmentaScene.h"
+#include "AugmentaInteractiveArea.h"
 
 namespace Augmenta {
     
-    // update these if TSPS core changes!
-    // valid as of TSPS version 1.3.4
+    // update these if Augmenta core changes!
     static const string PERSON_ENTERED  = "/au/personEntered";
     static const string PERSON_UPDATED  = "/au/personUpdated";
     static const string PERSON_LEAVING  = "/au/personWillLeave";
@@ -42,16 +40,20 @@ namespace Augmenta {
         
         Person* personAtIndex(int i);
         Person* personWithID(int pid);
+        Person* getOldestPerson();
         
         int totalPeople();
         Scene* getScene();
         vector<Person*> & getPeople();
+        
+        ofPoint getSceneSize();
         
     protected:
         ConnectionStatus status;
         
         vector<Person*> trackedPeople;
         Scene scene;
+        InteractiveArea interactiveArea;
         float personTimeout;
         
         void updatePersonFromOSC( Person * p, ofxOscMessage & m );
