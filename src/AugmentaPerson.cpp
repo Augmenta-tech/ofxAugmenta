@@ -82,20 +82,57 @@ void Person::draw(int _width, int _height){
     
     ofSetColor(ofColor::yellow);
     
-    // Draw person
-    ofRect(boundingRect.x* _width, boundingRect.y* _height, boundingRect.width* _width, boundingRect.height* _height);
-    
     // Draw highest point
     ofSetColor(ofColor::purple);
     ofCircle(highest.x* _width, highest.y* _height, 4);
     
     // Draw centroid
-    ofSetColor(ofColor::red);
-    ofCircle(centroid.x* _width, centroid.y* _height, 3);
+    ofFill();
+    ofSetColor(ofColor::white);
+    ofCircle(centroid.x* _width, centroid.y* _height, 8);
+    ofSetColor(genColorFromPID());
+    ofCircle(centroid.x* _width, centroid.y* _height, 5);
+   
+    // Draw person
+    ofNoFill();
+    ofRect(boundingRect.x* _width, boundingRect.y* _height, boundingRect.width* _width, boundingRect.height* _height);
     
     // Draw pid oid age
     ofSetColor(ofColor::white);
     char idstr[1024];
     sprintf(idstr, "pid: %d\noid: %d\nage: %d", pid, oid, age );
     ofDrawBitmapString(idstr, centroid.x* _width+8, centroid.y* _height);
+}
+
+//--------------------------------------------------------------
+ofColor Person::genColorFromPID()
+{
+    // TODO : Use monokaï colors
+    
+    // Compute a color for the points
+    ofColor color;
+    
+    if (pid%5 == 0){
+        color.r = 255;
+        color.g = 255;
+        color.b = 0;
+    } else if (pid%5 == 1){
+        color.r = 255;
+        color.g = 0;
+        color.b = 255;
+    } else if (pid%5 == 2){
+        color.r = 0;
+        color.g = 255;
+        color.b = 255;
+    } else if (pid%5 == 3){
+        color.r = 0;
+        color.g = 255;
+        color.b = 50;
+    } else {
+        color.r = 50;
+        color.g = 255;
+        color.b = 0;
+    }
+    
+    return color;
 }

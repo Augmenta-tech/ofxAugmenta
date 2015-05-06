@@ -90,6 +90,8 @@ namespace Augmenta {
 
     private:
         
+        ofColor genColorFromPID();
+        
         int timeRemaining;
     };
 }

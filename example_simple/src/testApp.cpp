@@ -48,9 +48,11 @@ void testApp::draw(){
     
     // You can draw stuff here !
     ofPushStyle();
+    ofNoFill();
+    ofSetLineWidth(8);
     ofSetColor(ofColor::blue);
     for(int i=0; i<people.size(); ++i) {
-        ofCircle(people[i]->centroid.x* ofGetWidth(), people[i]->centroid.y* ofGetHeight(), 10);
+        ofCircle(people[i]->centroid.x* ofGetWidth(), people[i]->centroid.y* ofGetHeight(), 15);
     }
     ofPopStyle();
     
@@ -60,6 +62,8 @@ void testApp::draw(){
         // Draw debug data
         m_auReceiver.getInteractiveArea()->draw();
         m_auReceiver.draw(ofGetWidth(), ofGetHeight());
+    } else {
+        ofDrawBitmapString("[d] to show debug", ofPoint(10,10));
     }
 }
 
