@@ -85,7 +85,9 @@ void Receiver::update(ofEventArgs &e){
     // Delete the persons which are marked dead
     for(int j=0; j<toDelete.size(); ++j){
         currentPeople.erase(trackedPeople[toDelete[j]]->pid);
-        delete trackedPeople[toDelete[j]];
+        if(trackedPeople[toDelete[j]]){
+            delete trackedPeople[toDelete[j]];
+        }
         trackedPeople.erase(trackedPeople.begin() + toDelete[j]);
     }
     
