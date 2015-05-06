@@ -32,9 +32,9 @@ namespace Augmenta {
         ofPushStyle();
         ofNoFill();
         ofSetLineWidth(.5);
-        for(int i = 0; i < totalPeople(); i++){
-            Person* p = personAtIndex(i);
-            p->draw(width, height);
+        vector<Person*> people = getPeople();
+        for(int i=0; i<people.size(); ++i) {
+            people[i]->draw(width, height);
         }
         ofPopStyle();
     }
@@ -48,7 +48,12 @@ namespace Augmenta {
     
     //--------------------------------------------------------------
     vector<Person*> & Receiver::getPeople(){
-        return trackedPeople;
+        //return trackedPeople;
+        currentPeopleArray.clear();
+        for( map<int, Person*>::const_iterator it = currentPeople.begin(); it != currentPeople.end(); ++it ) {
+            currentPeopleArray.push_back( it->second );
+        }
+        return currentPeopleArray;
     }
     
     //--------------------------------------------------------------
@@ -58,26 +63,25 @@ namespace Augmenta {
     
     //--------------------------------------------------------------
     void Receiver::update( ofEventArgs &e ){
-        // store people who hasn't been updated since a given timeout, and who will be deleted
-        std::vector<std::vector<Person*>::iterator> peopleToRemove; // people are stored in temp. vector to prevent bad access exception
-        for(std::vector<Person*>::iterator person = trackedPeople.begin(); person != trackedPeople.end(); ++person) {
-            if((*person)!=NULL){
-                (*person)->timeRemaining--;
-                if((*person)->timeRemaining <= 0){
+        std::vector<int> toDelete;
+        for(int i=0 ; i<trackedPeople.size(); ++i) {
+            if(trackedPeople[i]!=NULL){
+                trackedPeople[i]->timeRemaining--;
+                if(trackedPeople[i]->timeRemaining <= 0){
                     EventArgs args;
-                    args.person = *person;
+                    args.person = trackedPeople[i];
                     args.scene = &scene;
                     ofNotifyEvent(Events().personWillLeave, args, this);
-                    peopleToRemove.push_back(person);
+                    toDelete.push_back(i);
                 }
             }
         }
-        // delete people
-        for(int personToRemove = 0; personToRemove<peopleToRemove.size(); personToRemove++){
-            trackedPeople.erase(peopleToRemove[personToRemove]);
-            delete *(peopleToRemove[personToRemove]);
+        for(int j=0; j<toDelete.size(); ++j){
+            currentPeople.erase(trackedPeople[toDelete[j]]->id);
+            delete trackedPeople[toDelete[j]];
+            trackedPeople.erase(trackedPeople.begin() + toDelete[j]);
         }
-        peopleToRemove.clear();
+        
         
         // update loop
         if(hasWaitingMessages()){
@@ -141,13 +145,38 @@ namespace Augmenta {
                     args.person = person;
                     args.scene = &scene;
                     
+                    // PERSON_ENTERED
                     if (m.getAddress() == PERSON_ENTERED || personIsNew){
-                        ofNotifyEvent(Events().personEntered, args, this);
-                    } else if (m.getAddress() == PERSON_UPDATED){
-                        ofNotifyEvent(Events().personUpdated, args, this);
+                        if(interactiveArea.contains(person->centroid)){
+                            ofNotifyEvent(Events().personEntered, args, this);
+                            currentPeople.insert(std::pair<int, Person*>(person->id, person));
+                        }
+                    } // PERSON_UPDATED
+                    else if (m.getAddress() == PERSON_UPDATED){
+                        map<int, Person*>::iterator mapIterator;
+                        mapIterator = currentPeople.find(m.getArgAsInt32(0));
+                        // Check if the person exists in the scene
+                        bool personExists = (mapIterator != currentPeople.end());
                         
-                    } else if (m.getAddress() == PERSON_LEAVING){
-                        ofNotifyEvent(Events().personWillLeave, args, this);
+                        if(interactiveArea.contains(person->centroid)){
+                            if(!personExists){
+                                ofNotifyEvent(Events().personEntered, args, this);
+                                currentPeople.insert(std::pair<int, Person*>(person->id, person));
+                            }
+                            else{
+                                ofNotifyEvent(Events().personUpdated, args, this);
+                            }
+                        } else{
+                            // Else we have to act like that the person left
+                            if(personExists){
+                                ofNotifyEvent(Events().personWillLeave, args, this);
+                                currentPeople.erase(mapIterator->second->id);
+                            }// if the person does not exist in the scene no need to do this again
+                        }
+                        
+                    } // PERSON_LEAVING
+                    else if (m.getAddress() == PERSON_LEAVING){
+                        //ofNotifyEvent(Events().personWillLeave, args, this);
                     }
                     
                     if(m.getAddress() == PERSON_LEAVING){
@@ -223,6 +252,12 @@ namespace Augmenta {
     int Receiver::totalPeople()
     {
         return trackedPeople.size();
+    }
+    
+    //--------------------------------------------------------------
+    void Receiver::setTimeOut(int t)
+    {
+        personTimeout = t;
     }
 }
 

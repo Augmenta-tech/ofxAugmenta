@@ -19,7 +19,9 @@ class testApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
         
-        Augmenta::Receiver receiver;
+        Augmenta::Receiver auReceiver;
+        bool debug = false;
+        float originX = 0.0f, originY = 0.0f;
     
         // event listeners
         void onPersonEntered( Augmenta::EventArgs & augmentaEvent );

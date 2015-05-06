@@ -34,6 +34,8 @@ namespace Augmenta {
     public:
         Receiver();
         
+        InteractiveArea interactiveArea;
+        
         void connect( int port );
         void update( ofEventArgs &e );
         void draw( int width, int height );
@@ -48,13 +50,20 @@ namespace Augmenta {
         
         ofPoint getSceneSize();
         
+        void setTimeOut(int t);
+        
     protected:
         ConnectionStatus status;
         
+        /** All people tracked in the whole scene */
         vector<Person*> trackedPeople;
+        /** Map of people in the interactive area, accessible by unique id */
+        map<int, Person*> currentPeople;
+        /** Array of people in the interactive area */
+        vector<Person*> currentPeopleArray;
+        
         Scene scene;
-        InteractiveArea interactiveArea;
-        float personTimeout;
+        int personTimeout;
         
         void updatePersonFromOSC( Person * p, ofxOscMessage & m );
     };

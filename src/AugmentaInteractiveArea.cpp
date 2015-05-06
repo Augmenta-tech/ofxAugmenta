@@ -29,7 +29,7 @@ namespace Augmenta {
         ofNoFill();
         ofSetColor(255, 0, 0, 100);
         ofSetLineWidth(2);
-        ofRectangle(area.x*ofGetWidth(), area.y*ofGetHeight(), area.width*ofGetWidth(), area.height*ofGetHeight());
+        ofRect(area.x*ofGetWidth(), area.y*ofGetHeight(), area.width*ofGetWidth(), area.height*ofGetHeight());
         ofPopStyle();
     }
     
