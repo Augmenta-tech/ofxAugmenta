@@ -18,9 +18,7 @@ or
 git clone https://github.com/Theoriz/ofxAugmenta.git
 ```
 
-in the "apps" directory of [OpenFrameworks][]
-
-You should now have a folder named *ofxAugmenta* in this directory.
+You should now have a folder named *ofxAugmenta* in the "addons" directory of [OpenFrameworks][]
 
 Use
 ---
