@@ -7,11 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A302032D1AFB72240003055E /* AugmentaEvents.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A30203231AFB72240003055E /* AugmentaEvents.cpp */; };
-		A302032E1AFB72240003055E /* AugmentaInteractiveArea.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A30203251AFB72240003055E /* AugmentaInteractiveArea.cpp */; };
-		A302032F1AFB72240003055E /* AugmentaPerson.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A30203271AFB72240003055E /* AugmentaPerson.cpp */; };
-		A30203301AFB72240003055E /* ofxAugmenta.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A30203291AFB72240003055E /* ofxAugmenta.cpp */; };
-		A30203311AFB72240003055E /* AugmentaScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A302032B1AFB72240003055E /* AugmentaScene.cpp */; };
 		A302035E1AFB725F0003055E /* IpEndpointName.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A30203381AFB725F0003055E /* IpEndpointName.cpp */; };
 		A302035F1AFB725F0003055E /* NetworkingUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A302033D1AFB725F0003055E /* NetworkingUtils.cpp */; };
 		A30203601AFB725F0003055E /* UdpSocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A302033E1AFB725F0003055E /* UdpSocket.cpp */; };
@@ -26,6 +21,11 @@
 		A30203691AFB725F0003055E /* ofxOscParameterSync.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A30203581AFB725F0003055E /* ofxOscParameterSync.cpp */; };
 		A302036A1AFB725F0003055E /* ofxOscReceiver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A302035A1AFB725F0003055E /* ofxOscReceiver.cpp */; };
 		A302036B1AFB725F0003055E /* ofxOscSender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A302035C1AFB725F0003055E /* ofxOscSender.cpp */; };
+		A38A27D41AFB859300771627 /* AugmentaEvents.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A38A27CA1AFB859300771627 /* AugmentaEvents.cpp */; };
+		A38A27D51AFB859300771627 /* AugmentaInteractiveArea.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A38A27CC1AFB859300771627 /* AugmentaInteractiveArea.cpp */; };
+		A38A27D61AFB859300771627 /* AugmentaPerson.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A38A27CE1AFB859300771627 /* AugmentaPerson.cpp */; };
+		A38A27D71AFB859300771627 /* AugmentaScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A38A27D01AFB859300771627 /* AugmentaScene.cpp */; };
+		A38A27D81AFB859300771627 /* ofxAugmenta.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A38A27D21AFB859300771627 /* ofxAugmenta.cpp */; };
 		BBAB23CB13894F3D00AA2426 /* GLUT.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BBAB23BE13894E4700AA2426 /* GLUT.framework */; };
 		E4328149138ABC9F0047C5CB /* openFrameworksDebug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4328148138ABC890047C5CB /* openFrameworksDebug.a */; };
 		E45BE97B0E8CC7DD009D7055 /* AGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE9710E8CC7DD009D7055 /* AGL.framework */; };
@@ -78,16 +78,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		A30203231AFB72240003055E /* AugmentaEvents.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AugmentaEvents.cpp; sourceTree = "<group>"; };
-		A30203241AFB72240003055E /* AugmentaEvents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AugmentaEvents.h; sourceTree = "<group>"; };
-		A30203251AFB72240003055E /* AugmentaInteractiveArea.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AugmentaInteractiveArea.cpp; sourceTree = "<group>"; };
-		A30203261AFB72240003055E /* AugmentaInteractiveArea.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AugmentaInteractiveArea.h; sourceTree = "<group>"; };
-		A30203271AFB72240003055E /* AugmentaPerson.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AugmentaPerson.cpp; sourceTree = "<group>"; };
-		A30203281AFB72240003055E /* ofxAugmenta.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxAugmenta.h; sourceTree = "<group>"; };
-		A30203291AFB72240003055E /* ofxAugmenta.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxAugmenta.cpp; sourceTree = "<group>"; };
-		A302032A1AFB72240003055E /* AugmentaReceiver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AugmentaReceiver.h; sourceTree = "<group>"; };
-		A302032B1AFB72240003055E /* AugmentaScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AugmentaScene.cpp; sourceTree = "<group>"; };
-		A302032C1AFB72240003055E /* AugmentaScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AugmentaScene.h; sourceTree = "<group>"; };
 		A30203381AFB725F0003055E /* IpEndpointName.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IpEndpointName.cpp; sourceTree = "<group>"; };
 		A30203391AFB725F0003055E /* IpEndpointName.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IpEndpointName.h; sourceTree = "<group>"; };
 		A302033A1AFB725F0003055E /* NetworkingUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkingUtils.h; sourceTree = "<group>"; };
@@ -122,6 +112,16 @@
 		A302035B1AFB725F0003055E /* ofxOscReceiver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxOscReceiver.h; sourceTree = "<group>"; };
 		A302035C1AFB725F0003055E /* ofxOscSender.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxOscSender.cpp; sourceTree = "<group>"; };
 		A302035D1AFB725F0003055E /* ofxOscSender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxOscSender.h; sourceTree = "<group>"; };
+		A38A27CA1AFB859300771627 /* AugmentaEvents.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AugmentaEvents.cpp; sourceTree = "<group>"; };
+		A38A27CB1AFB859300771627 /* AugmentaEvents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AugmentaEvents.h; sourceTree = "<group>"; };
+		A38A27CC1AFB859300771627 /* AugmentaInteractiveArea.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AugmentaInteractiveArea.cpp; sourceTree = "<group>"; };
+		A38A27CD1AFB859300771627 /* AugmentaInteractiveArea.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AugmentaInteractiveArea.h; sourceTree = "<group>"; };
+		A38A27CE1AFB859300771627 /* AugmentaPerson.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AugmentaPerson.cpp; sourceTree = "<group>"; };
+		A38A27CF1AFB859300771627 /* AugmentaPerson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AugmentaPerson.h; sourceTree = "<group>"; };
+		A38A27D01AFB859300771627 /* AugmentaScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AugmentaScene.cpp; sourceTree = "<group>"; };
+		A38A27D11AFB859300771627 /* AugmentaScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AugmentaScene.h; sourceTree = "<group>"; };
+		A38A27D21AFB859300771627 /* ofxAugmenta.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxAugmenta.cpp; sourceTree = "<group>"; };
+		A38A27D31AFB859300771627 /* ofxAugmenta.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxAugmenta.h; sourceTree = "<group>"; };
 		BBAB23BE13894E4700AA2426 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = ../../../libs/glut/lib/osx/GLUT.framework; sourceTree = "<group>"; };
 		E4328143138ABC890047C5CB /* openFrameworksLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = openFrameworksLib.xcodeproj; path = ../../../libs/openFrameworksCompiled/project/osx/openFrameworksLib.xcodeproj; sourceTree = SOURCE_ROOT; };
 		E45BE9710E8CC7DD009D7055 /* AGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AGL.framework; path = /System/Library/Frameworks/AGL.framework; sourceTree = "<absolute>"; };
@@ -174,28 +174,10 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		A30203221AFB72240003055E /* src */ = {
-			isa = PBXGroup;
-			children = (
-				A30203281AFB72240003055E /* ofxAugmenta.h */,
-				A30203291AFB72240003055E /* ofxAugmenta.cpp */,
-				A30203231AFB72240003055E /* AugmentaEvents.cpp */,
-				A30203241AFB72240003055E /* AugmentaEvents.h */,
-				A30203251AFB72240003055E /* AugmentaInteractiveArea.cpp */,
-				A30203261AFB72240003055E /* AugmentaInteractiveArea.h */,
-				A30203271AFB72240003055E /* AugmentaPerson.cpp */,
-				A302032A1AFB72240003055E /* AugmentaReceiver.h */,
-				A302032B1AFB72240003055E /* AugmentaScene.cpp */,
-				A302032C1AFB72240003055E /* AugmentaScene.h */,
-			);
-			name = src;
-			path = ../src;
-			sourceTree = "<group>";
-		};
 		A30203321AFB722D0003055E /* ofxAugmenta */ = {
 			isa = PBXGroup;
 			children = (
-				A30203221AFB72240003055E /* src */,
+				A38A27C91AFB859300771627 /* src */,
 			);
 			name = ofxAugmenta;
 			sourceTree = "<group>";
@@ -304,6 +286,24 @@
 				A302035D1AFB725F0003055E /* ofxOscSender.h */,
 			);
 			path = src;
+			sourceTree = "<group>";
+		};
+		A38A27C91AFB859300771627 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				A38A27D21AFB859300771627 /* ofxAugmenta.cpp */,
+				A38A27D31AFB859300771627 /* ofxAugmenta.h */,
+				A38A27CA1AFB859300771627 /* AugmentaEvents.cpp */,
+				A38A27CB1AFB859300771627 /* AugmentaEvents.h */,
+				A38A27CC1AFB859300771627 /* AugmentaInteractiveArea.cpp */,
+				A38A27CD1AFB859300771627 /* AugmentaInteractiveArea.h */,
+				A38A27CE1AFB859300771627 /* AugmentaPerson.cpp */,
+				A38A27CF1AFB859300771627 /* AugmentaPerson.h */,
+				A38A27D01AFB859300771627 /* AugmentaScene.cpp */,
+				A38A27D11AFB859300771627 /* AugmentaScene.h */,
+			);
+			name = src;
+			path = ../src;
 			sourceTree = "<group>";
 		};
 		BB4B014C10F69532006C3DED /* addons */ = {
@@ -484,23 +484,23 @@
 				A30203611AFB725F0003055E /* NetworkingUtilsWin.cpp in Sources */,
 				A30203621AFB725F0003055E /* UdpSocketWin.cpp in Sources */,
 				A302035F1AFB725F0003055E /* NetworkingUtils.cpp in Sources */,
-				A302032D1AFB72240003055E /* AugmentaEvents.cpp in Sources */,
-				A302032E1AFB72240003055E /* AugmentaInteractiveArea.cpp in Sources */,
 				A302036A1AFB725F0003055E /* ofxOscReceiver.cpp in Sources */,
-				A302032F1AFB72240003055E /* AugmentaPerson.cpp in Sources */,
 				A30203681AFB725F0003055E /* ofxOscMessage.cpp in Sources */,
+				A38A27D71AFB859300771627 /* AugmentaScene.cpp in Sources */,
+				A38A27D81AFB859300771627 /* ofxAugmenta.cpp in Sources */,
 				A30203651AFB725F0003055E /* OscReceivedElements.cpp in Sources */,
 				A30203661AFB725F0003055E /* OscTypes.cpp in Sources */,
 				E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */,
 				A302036B1AFB725F0003055E /* ofxOscSender.cpp in Sources */,
-				A30203301AFB72240003055E /* ofxAugmenta.cpp in Sources */,
-				A30203311AFB72240003055E /* AugmentaScene.cpp in Sources */,
 				A302035E1AFB725F0003055E /* IpEndpointName.cpp in Sources */,
 				A30203601AFB725F0003055E /* UdpSocket.cpp in Sources */,
+				A38A27D41AFB859300771627 /* AugmentaEvents.cpp in Sources */,
+				A38A27D61AFB859300771627 /* AugmentaPerson.cpp in Sources */,
 				A30203631AFB725F0003055E /* OscOutboundPacketStream.cpp in Sources */,
 				E4B69E210A3A1BDC003C02F2 /* ofApp.cpp in Sources */,
 				A30203641AFB725F0003055E /* OscPrintReceivedElements.cpp in Sources */,
 				A30203691AFB725F0003055E /* ofxOscParameterSync.cpp in Sources */,
+				A38A27D51AFB859300771627 /* AugmentaInteractiveArea.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

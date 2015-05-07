@@ -1,99 +1,70 @@
 /***************************************************************************
  *
- *  Augmenta::ofxAugmenta.h
+ *  Augmenta::AugmentaReceiver.h
  *
  ***************************************************************************/
 
-#ifndef AUGMENTA_PERSON_H
-#define AUGMENTA_PERSON_H
+#ifndef AUGMENTA_RECEIVER_H
+#define AUGMENTA_RECEIVER_H
 
-#include "ofMain.h"
+#include "ofxOsc.h"
 
-/*
- 
- Get latest protocol up-to-date here : https://github.com/Theoriz/Augmenta/wiki
- 
- Copied here (for reference only) :
- 
- ////////////////////////////////////////////////////////////////////////////////////////////////////////
- 
-     * Augmenta OSC Protocol :
-     
-     /au/personWillLeave args0 arg1 ... argn
-     /au/personUpdated   args0 arg1 ... argn
-     /au/personEntered   args0 arg1 ... argn
-     
-     where args are :
-     
-     
-     0: pid (int)                        // Personal ID ex : 42th person to enter stage has pid=42
-     1: oid (int)                        // Ordered ID ex : if 3 person on stage, 43th person has oid=2
-     2: age (int)                        // Time on stage (in frame number)
-     3: centroid.x (float)               // Position projected to the ground
-     4: centroid.y (float)
-     5: velocity.x (float)               // Speed and direction vector
-     6: velocity.y (float)
-     7: depth (float)                    // Distance to sensor (in m)
-     8: boundingRect.x (float)           // Bounding box on the ground
-     9: boundingRect.y (float)
-     10: boundingRect.width (float)
-     11: boundingRect.height (float)
-     12: highest.x (float)               // Highest point placement
-     13: highest.y (float)
-     14: highest.z (float)               // Height
-     
-     /au/scene   args0 arg1 ... argn
-     
-     0: currentTime (int)                // Time (in frame number)
-     1: percentCovered (float)           // Percent covered
-     2: numPeople (int)                  // Number of person
-     3: averageMotion.x (float)          // Average motion
-     4: averageMotion.y (float)
-     5: scene.width (int)                // Scene size
-     6: scene.height (int)
- 
-////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+#include "AugmentaEvents.h"
+#include "AugmentaPerson.h"
+#include "AugmentaScene.h"
+#include "AugmentaInteractiveArea.h"
 
 namespace Augmenta {
     
-    class Person {
+    static const string PERSON_ENTERED  = "/au/personEntered";
+    static const string PERSON_UPDATED  = "/au/personUpdated";
+    static const string PERSON_LEAVING  = "/au/personWillLeave";
+    static const string SCENE_UPDATED   = "/au/scene";
+    static const string CUSTOM_EVENT    = "/au/customEvent";
+    
+    enum ConnectionStatus
+    {
+        UNKNOWN,
+        CONNECTING,
+        CONNECTED,
+        DISCONNECTED
+    };
+    
+    class Receiver : public ofxOscReceiver
+    {
+    public:
         
-	public:
+        Receiver();
         
-        // Methods
-        Person();
-        Person(int _id, int _oid, int _age, float _depth, ofPoint _centroid, ofPoint _velocity, ofRectangle _boundingRect, float _highestX, float _highestY, float _highestZ);
-        Person( int pid, int oid );
-		~Person();
+        void connect( int port );
+        void update( ofEventArgs &e );
+        void draw( int width, int height );
+        void setTimeOut(int t);
         
-        virtual void update();
-        virtual void draw(int _width, int _height);
+        vector<Person*> & getPeople();
+        inline Scene* getScene() {return &scene;}
+        inline InteractiveArea* getInteractiveArea() {return &interactiveArea;}
+        Person* getOldestPerson();
+        Person* getNewestPerson();
         
-        // Getter
-        inline int getRemainingtime() {return timeRemaining;}
-        inline void updateRemainingTime() {timeRemaining--;}
-        
-        // Setter
-        inline void setRemainingtime(int _timeRemaining) {timeRemaining = _timeRemaining;}
-        virtual void setBoundingRect( ofRectangle _rect );
-        virtual void setCentroid( ofPoint _centroid, bool dampen );
-        
-        // Members
-        int pid;
-        int oid;
-		int age;
-		ofPoint centroid;
-        ofPoint velocity;
-        float depth; // Not implemented yet
-		ofRectangle boundingRect;
-        ofPoint highest;
-
     private:
+
+        void updatePersonFromOSC( Person * p, ofxOscMessage & m );
         
-        ofColor genColorFromPID();
+        Person* getPersonAtIndex(int i);
+        Person* getPersonWithPID(int pid);
+        ofPoint getSceneSize();
+
+        InteractiveArea interactiveArea;
+        ConnectionStatus status;
+        Scene scene;
         
-        int timeRemaining;
+        vector<Person*> currentPeopleArray;         /** Array of people in the interactive area */
+        vector<Person*> trackedPeople;         /** All people tracked in the whole scene */
+        map<int, Person*> currentPeople;         /** Map of people in the interactive area, accessible by unique id */
+        
+        int personTimeout;
     };
 }
 
-#endif // AUGMENTA_PERSON_H
+#endif //AUGMENTA_RECEIVER_H
