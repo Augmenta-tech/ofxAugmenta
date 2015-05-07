@@ -1,4 +1,4 @@
-#include "testApp.h"
+#include "ofApp.h"
 
 #define OSC_PORT 12000
 
@@ -30,7 +30,9 @@ void testApp::update(){
     // For each person...
     for (int i=0; i<people.size(); i++){
 
+        ////////////////////////////////////////////////////////
         // You can do stuff here :)
+        ////////////////////////////////////////////////////////
     }
 }
 
@@ -40,15 +42,20 @@ void testApp::draw(){
     // Get the person data
     vector<Augmenta::Person*> people = m_auReceiver.getPeople();
     
+    ////////////////////////////////////////////////////////
+    
     // You can draw stuff here !
+    
     ofPushStyle();
     ofNoFill();
-    ofSetLineWidth(4);
+    ofSetLineWidth(3);
     ofSetColor(ofColor::blue);
     for(int i=0; i<people.size(); ++i) {
         ofCircle(people[i]->centroid.x* ofGetWidth(), people[i]->centroid.y* ofGetHeight(), 15);
     }
     ofPopStyle();
+    
+    ////////////////////////////////////////////////////////
     
     // Draw the interactive area
     if(m_bDebug){

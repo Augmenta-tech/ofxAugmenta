@@ -1,7 +1,7 @@
 #pragma once
 
 #include "ofMain.h"
-#include "AugmentaReceiver.h"
+#include "ofxAugmenta.h"
 
 class testApp : public ofBaseApp{
 	
