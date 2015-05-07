@@ -26,7 +26,7 @@ Use
 Create one folder in the "apps" directory and copy one example inside.
 You can then modify it and work from here.
 
-You can also generate one projet with the project generator.
+You can also create a project with the project generator.
 
 Examples
 --------
