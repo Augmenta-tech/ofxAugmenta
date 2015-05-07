@@ -81,15 +81,21 @@ void Receiver::update(ofEventArgs &e){
         }
     }
     
-    // Delete the persons which are marked dead
-    if(!toDelete.empty()){
-        for(int j=0; j<toDelete.size(); ++j){
-            currentPeople.erase(trackedPeople[toDelete[j]]->pid);
-            if(trackedPeople[toDelete[j]] != NULL){
-                delete trackedPeople[toDelete[j]];
-                trackedPeople.erase(trackedPeople.begin() + toDelete[j]);
+    try {
+        // Delete the persons which are marked dead
+        if(!toDelete.empty()){
+            for(int j=0; j<toDelete.size(); ++j){
+                currentPeople.erase(trackedPeople[toDelete[j]]->pid);
+                // TODO : TOKILL TOFIX We should not check if index is greater than the vector !
+                // Index seems to be greater than +1 each time, wrong 0/1 init ?
+                if(trackedPeople[toDelete[j]] != NULL && j<trackedPeople.size()){
+                    delete trackedPeople[toDelete[j]];
+                    trackedPeople.erase(trackedPeople.begin() + toDelete[j]);
+                }
             }
         }
+    }catch(std::exception &e){
+        cerr << &e << endl;
     }
     
     // Get OSC data
