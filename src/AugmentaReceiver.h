@@ -16,13 +16,11 @@
 
 namespace Augmenta {
     
-    // TODO : Remove trailing slash !!
-    
-    static const string PERSON_ENTERED  = "/au/personEntered/";
-    static const string PERSON_UPDATED  = "/au/personUpdated/";
-    static const string PERSON_LEAVING  = "/au/personWillLeave/";
-    static const string SCENE_UPDATED   = "/au/scene/";
-    static const string CUSTOM_EVENT    = "/au/customEvent/";
+    static const string PERSON_ENTERED  = "/au/personEntered";
+    static const string PERSON_UPDATED  = "/au/personUpdated";
+    static const string PERSON_LEAVING  = "/au/personWillLeave";
+    static const string SCENE_UPDATED   = "/au/scene";
+    static const string CUSTOM_EVENT    = "/au/customEvent";
     
     enum ConnectionStatus
     {

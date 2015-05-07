@@ -15,6 +15,10 @@ void testApp::setup(){
     m_auReceiver.connect(OSC_PORT);
     
     ofxAddAugmentaListeners(this);
+    
+    ofEnableAlphaBlending();
+    ofSetCircleResolution(60);
+    ofEnableBlendMode(OF_BLENDMODE_ADD);
 }
 
 //--------------------------------------------------------------

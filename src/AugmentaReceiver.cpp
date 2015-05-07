@@ -83,12 +83,14 @@ void Receiver::update(ofEventArgs &e){
     }
     
     // Delete the persons which are marked dead
-    for(int j=0; j<toDelete.size(); ++j){
-        currentPeople.erase(trackedPeople[toDelete[j]]->pid);
-        if(trackedPeople[toDelete[j]]){
-            delete trackedPeople[toDelete[j]];
+    if(!toDelete.empty()){
+        for(int j=0; j<toDelete.size(); ++j){
+            currentPeople.erase(trackedPeople[toDelete[j]]->pid);
+            if(trackedPeople[toDelete[j]] != NULL){
+                delete trackedPeople[toDelete[j]];
+                trackedPeople.erase(trackedPeople.begin() + toDelete[j]);
+            }
         }
-        trackedPeople.erase(trackedPeople.begin() + toDelete[j]);
     }
     
     // Get OSC data
@@ -100,7 +102,7 @@ void Receiver::update(ofEventArgs &e){
             ofxOscMessage m;
             getNextMessage( &m );
             
-            if(m.getAddress() == SCENE_UPDATED ) {
+            if(m.getAddress() == SCENE_UPDATED || m.getAddress() == SCENE_UPDATED+"/" ) {
                 scene.age               = m.getArgAsInt32(0);
                 scene.percentCovered    = m.getArgAsFloat(1);
                 scene.numPeople         = m.getArgAsInt32(2);
@@ -110,7 +112,7 @@ void Receiver::update(ofEventArgs &e){
                 scene.height            = m.getArgAsInt32(6);
             
             // Custom event for dev
-            } else if ( m.getAddress() == CUSTOM_EVENT ){
+            } else if ( m.getAddress() == CUSTOM_EVENT || m.getAddress() == CUSTOM_EVENT+"/" ){
                 
                 CustomEventArgs evtArgs;
                 evtArgs.name = m.getArgAsString(0);
@@ -121,9 +123,9 @@ void Receiver::update(ofEventArgs &e){
                 
                 ofNotifyEvent(Events().customEvent, evtArgs, this);
                 
-            } else if (m.getAddress() == PERSON_ENTERED ||
-                m.getAddress() == PERSON_UPDATED ||
-                m.getAddress() == PERSON_LEAVING ){
+            } else if (m.getAddress() == PERSON_ENTERED || m.getAddress() == PERSON_ENTERED+"/" ||
+                m.getAddress() == PERSON_UPDATED || m.getAddress() == PERSON_UPDATED+"/" ||
+                m.getAddress() == PERSON_LEAVING || m.getAddress() == PERSON_LEAVING+"/" ){
                 
                 int pid = m.getArgAsInt32(0);
                 bool personIsNew = false;
@@ -147,7 +149,7 @@ void Receiver::update(ofEventArgs &e){
                 args.scene = &scene;
                 
                 // PERSON_ENTERED
-                if (m.getAddress() == PERSON_ENTERED || personIsNew){
+                if (m.getAddress() == PERSON_ENTERED || m.getAddress() == PERSON_ENTERED+"/" || personIsNew){
                     
                     // We send the event only if person is in the interactive area
                     if(interactiveArea.contains(person->centroid)){
@@ -155,7 +157,7 @@ void Receiver::update(ofEventArgs &e){
                         currentPeople.insert(std::pair<int, Person*>(person->pid, person));
                     }
                 } // PERSON_UPDATED
-                else if (m.getAddress() == PERSON_UPDATED){
+                else if (m.getAddress() == PERSON_UPDATED || m.getAddress() == PERSON_UPDATED+"/" ){
                     map<int, Person*>::iterator mapIterator;
                     mapIterator = currentPeople.find(m.getArgAsInt32(0));
                     // Check if the person exists in the scene
@@ -187,9 +189,12 @@ void Receiver::update(ofEventArgs &e){
                     //ofNotifyEvent(Events().personWillLeave, args, this);
                 }*/
                 
-                if(m.getAddress() == PERSON_LEAVING){
+                if(m.getAddress() == PERSON_LEAVING || m.getAddress() == PERSON_LEAVING+"/" ){
                     for (int i = trackedPeople.size() - 1; i >= 0; i--){
                         if (trackedPeople[i]->pid == person->pid){
+                            if(interactiveArea.contains(person->centroid)){
+                                ofNotifyEvent(Events().personWillLeave, args, this);
+                            }
                             trackedPeople.erase(trackedPeople.begin() + i);
                             currentPeople.erase(person->pid);
                             break;
