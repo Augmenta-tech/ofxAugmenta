@@ -63,7 +63,7 @@ Thanks
 Thanks to the guys at [OpenTSPS][], this library is heavily inspired from it.
 
 Thanks to the devs and beta testers whose contribution are vitals to the project
- Tom Duchêne / David-Alexandre Chanel / Jonathan Richer / you !
+ Tom Duchêne / Baptiste Moizard / Jonathan Richer / David-Alexandre Chanel / you !
 
 [OpenFrameworks]: http://openframeworks.cc/
 [Théoriz studio]: http://www.theoriz.com/
