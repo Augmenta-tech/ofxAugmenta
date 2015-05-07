@@ -1,33 +1,29 @@
-#include "testApp.h"
+#include "ofApp.h"
 
 //--------------------------------------------------------------
-void testApp::setup(){
-    ofBackground(0);
-    tspsReceiver.connect(12000);
-    ofEnableAlphaBlending();
-    ofSetCircleResolution(60);
-    ofEnableBlendMode(OF_BLENDMODE_ADD);
+void ofApp::setup(){
+    
+    AugmentaReceiver.connect(12000);
 }
 
 //--------------------------------------------------------------
-void testApp::update(){
+void ofApp::update(){
     
 }
 
 //--------------------------------------------------------------
-void testApp::draw(){
-    vector<ofxTSPS::Person*> people = tspsReceiver.getPeople();
+void ofApp::draw(){
+    
+    ofBackground(ofColor::black);
+    
+    vector<Augmenta::Person*> people = AugmentaReceiver.getPeople();
     
     for (int i=0; i<people.size(); i++){
-        ofSetColor( min(255.0f, 150.0f + people[i]->age / 60.0f), 100 );
         
-        // since all properties are normalized, must scale them up to screen
         ofPoint centroid = people[i]->centroid;
         centroid.x *= ofGetWidth();
         centroid.y *= ofGetHeight();
         
-        float width = people[i]->boundingRect.width * ofGetWidth();
-        
-        ofCircle(centroid, width);
+        ofCircle(centroid, 10);
     }
 }

@@ -1,12 +1,11 @@
 
 /***************************************************************************
  *
- *  Receiver.cpp
- *	Receiver
+ *  ofxAugmenta.cpp
  *
  ***************************************************************************/
 
-#include "AugmentaReceiver.h"
+#include "ofxAugmenta.h"
 
 using namespace Augmenta;
     

@@ -1,14 +1,14 @@
 #pragma once
 
 #include "ofMain.h"
-#include "ofxTSPSReceiver.h"
+#include "AugmentaReceiver.h"
 
-class testApp : public ofBaseApp{
+class ofApp : public ofBaseApp{
 
 	public:
 		void setup();
 		void update();
 		void draw();
     
-        ofxTSPS::Receiver tspsReceiver;
+        Augmenta::Receiver AugmentaReceiver;
 };
