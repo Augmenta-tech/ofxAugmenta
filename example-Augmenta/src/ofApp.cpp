@@ -19,6 +19,8 @@ void testApp::setup(){
     ofEnableAlphaBlending();
     ofSetCircleResolution(60);
     ofEnableBlendMode(OF_BLENDMODE_ADD);
+    
+    m_oSyphonServer.setName("Augmenta");
 }
 
 //--------------------------------------------------------------
@@ -60,13 +62,18 @@ void testApp::draw(){
     // Draw the interactive area
     if(m_bDebug){
         
-        ofDrawBitmapString("[drag mouse] to set interactive area\n[right click] to reset", ofPoint(10,10));
-        
         // Draw debug data
         m_auReceiver.getInteractiveArea()->draw();
         m_auReceiver.draw(ofGetWidth(), ofGetHeight());
 
+        m_oSyphonServer.publishScreen();
+        
+        ofDrawBitmapString("[drag mouse] to set interactive area\n[right click] to reset", ofPoint(10,10));
+
     } else {
+        
+        m_oSyphonServer.publishScreen();
+        
         ofDrawBitmapString("[d] to show debug", ofPoint(10,10));
     }
 }

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ofMain.h"
+#include "ofxSyphon.h"
 #include "ofxAugmenta.h"
 
 class testApp : public ofBaseApp{
@@ -29,6 +30,7 @@ class testApp : public ofBaseApp{
     private:
     
         Augmenta::Receiver m_auReceiver;
+        ofxSyphonServer m_oSyphonServer;
     
         bool m_bDebug;
         ofPoint m_MouseClick;
