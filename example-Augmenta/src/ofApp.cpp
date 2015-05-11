@@ -19,8 +19,10 @@ void testApp::setup(){
     ofEnableAlphaBlending();
     ofSetCircleResolution(60);
     ofEnableBlendMode(OF_BLENDMODE_ADD);
-    
+
+#ifdef __APPLE__
     m_oSyphonServer.setName("Augmenta");
+#endif
 }
 
 //--------------------------------------------------------------
@@ -66,13 +68,17 @@ void testApp::draw(){
         m_auReceiver.getInteractiveArea()->draw();
         m_auReceiver.draw(ofGetWidth(), ofGetHeight());
 
+#ifdef __APPLE__
         m_oSyphonServer.publishScreen();
+#endif
         
         ofDrawBitmapString("[drag mouse] to set interactive area\n[right click] to reset", ofPoint(10,10));
 
     } else {
-        
+
+#ifdef __APPLE__
         m_oSyphonServer.publishScreen();
+#endif
         
         ofDrawBitmapString("[d] to show debug", ofPoint(10,10));
     }

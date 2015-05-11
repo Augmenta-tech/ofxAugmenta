@@ -1,8 +1,11 @@
 #pragma once
 
 #include "ofMain.h"
-#include "ofxSyphon.h"
 #include "ofxAugmenta.h"
+
+#ifdef __APPLE__
+#include "ofxSyphon.h"
+#endif
 
 class testApp : public ofBaseApp{
 	
@@ -30,8 +33,11 @@ class testApp : public ofBaseApp{
     private:
     
         Augmenta::Receiver m_auReceiver;
-        ofxSyphonServer m_oSyphonServer;
-    
         bool m_bDebug;
         ofPoint m_MouseClick;
+    
+#ifdef __APPLE__
+    ofxSyphonServer m_oSyphonServer;
+#endif
+
 };
