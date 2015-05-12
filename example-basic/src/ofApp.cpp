@@ -6,7 +6,7 @@
 void ofApp::setup(){
     
     try {
-        m_auReceiver.connect(OSC_PORT);
+        AugmentaReceiver.connect(12000);
     } catch (std::exception&e) {
         std::cerr << "Error : " << e.what() << endl;
     }
