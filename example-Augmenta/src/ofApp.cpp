@@ -1,5 +1,7 @@
 #include "ofApp.h"
 
+#include <iostream>
+
 #define OSC_PORT 12000
 
 //--------------------------------------------------------------
@@ -12,7 +14,12 @@ void testApp::setup(){
     m_MouseClick.y = 0.0f;
     
     ofBackground(ofColor::black);
-    m_auReceiver.connect(OSC_PORT);
+    
+    try {
+        m_auReceiver.connect(OSC_PORT);
+    } catch (std::exception&e) {
+        std::cerr << "Error : " << e.what() << endl;
+    }
     
     ofxAddAugmentaListeners(this);
     

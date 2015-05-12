@@ -1,9 +1,15 @@
 #include "ofApp.h"
 
+#include <iostream>
+
 //--------------------------------------------------------------
 void ofApp::setup(){
     
-    AugmentaReceiver.connect(12000);
+    try {
+        m_auReceiver.connect(OSC_PORT);
+    } catch (std::exception&e) {
+        std::cerr << "Error : " << e.what() << endl;
+    }
 }
 
 //--------------------------------------------------------------
