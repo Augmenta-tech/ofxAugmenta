@@ -12,13 +12,17 @@ void testApp::setup(){
     m_bDebug = false;
     m_MouseClick.x = 0.0f;
     m_MouseClick.y = 0.0f;
+    m_iPort = OSC_PORT;
     
     ofBackground(ofColor::black);
     
+    m_sOscPortDisplayMessage = "Listening to OSC on port " + ofToString(m_iPort);
+    
     try {
-        m_auReceiver.connect(OSC_PORT);
+        m_auReceiver.connect(m_iPort);
     } catch (std::exception&e) {
         std::cerr << "Error : " << e.what() << endl;
+        m_sOscPortDisplayMessage = "Could not bind to port " + ofToString(m_iPort) + " !";
     }
     
     ofxAddAugmentaListeners(this);
@@ -87,7 +91,7 @@ void testApp::draw(){
         m_oSyphonServer.publishScreen();
 #endif
         
-        ofDrawBitmapString("[d] to show debug", ofPoint(10,10));
+        ofDrawBitmapString(m_sOscPortDisplayMessage + "\n[d] to show debug", ofPoint(10,10));
     }
 }
 

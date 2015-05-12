@@ -35,6 +35,8 @@ class testApp : public ofBaseApp{
         Augmenta::Receiver m_auReceiver;
         bool m_bDebug;
         ofPoint m_MouseClick;
+        int m_iPort;
+        std::string m_sOscPortDisplayMessage;
     
 #ifdef __APPLE__
     ofxSyphonServer m_oSyphonServer;
