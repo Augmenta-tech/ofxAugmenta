@@ -107,7 +107,7 @@ void testApp::onPersonEntered( Augmenta::EventArgs & augmentaEvent ){
 //--------------------------------------------------------------
 void testApp::onPersonUpdated( Augmenta::EventArgs & augmentaEvent ){
     
-    ofLog(OF_LOG_NOTICE, "Person updated!");
+    //ofLog(OF_LOG_NOTICE, "Person updated!");
     
     // You can access the person like this :
     // augmentaEvent.person
