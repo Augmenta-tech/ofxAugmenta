@@ -39,7 +39,8 @@ void Receiver::draw(int width, int height){
     ofSetLineWidth(.5);
     vector<Person*> people = getPeople();
     for(int i=0; i<people.size(); ++i) {
-        people[i]->draw(width, height);
+        if(people[i] != NULL)
+            people[i]->draw(width, height);
     }
     ofPopStyle();
 }
@@ -52,50 +53,34 @@ ofPoint Receiver::getSceneSize(){
 //--------------------------------------------------------------
 vector<Person*> & Receiver::getPeople(){
 
-    // We have a map as an internal representation for the person vector (people) in the interactive area
-    // So we transform it here into a vector because it is what is asked :)
-    currentPeopleArray.clear();
-    for( map<int, Person*>::const_iterator it = currentPeople.begin(); it != currentPeople.end(); ++it ) {
-        currentPeopleArray.push_back( it->second );
-    }
-    return currentPeopleArray;
+    return trackedPeople;
 }
 
 //--------------------------------------------------------------
 void Receiver::update(ofEventArgs &e){
     
     // Check if there are persons to kill (timeout)
-    std::vector<int> toDelete;
-    
     for(int i=0 ; i<trackedPeople.size(); ++i) {
 
         if(trackedPeople[i]!=NULL){
             trackedPeople[i]->updateRemainingTime();
+            // if person excedeed timeout
             if(trackedPeople[i]->getRemainingtime() <= 0){
+                // update event
                 EventArgs args;
                 args.person = trackedPeople[i];
                 args.scene = &scene;
                 ofNotifyEvent(Events().personWillLeave, args, this);
-                toDelete.push_back(i);
+                
+                // delete person
+                Person* personToDelete = trackedPeople[i];
+                trackedPeople.erase(trackedPeople.begin() + i);
+                delete personToDelete;
+                
+                // update index for the loop
+                i--;    // to don't skip the next person, which actually took the place of the person we just deleted
             }
         }
-    }
-    
-    try {
-        // Delete the persons which are marked dead
-        if(!toDelete.empty()){
-            for(int j=0; j<toDelete.size(); ++j){
-                currentPeople.erase(trackedPeople[toDelete[j]]->pid);
-                // TODO : TOKILL TOFIX We should not check if index is greater than the vector !
-                // Index seems to be greater than +1 each time, wrong 0/1 init ?
-                if(trackedPeople[toDelete[j]] != NULL && j<trackedPeople.size()){
-                    delete trackedPeople[toDelete[j]];
-                    trackedPeople.erase(trackedPeople.begin() + toDelete[j]);
-                }
-            }
-        }
-    }catch(std::exception &e){
-        cerr << &e << endl;
     }
     
     // Get OSC data
@@ -107,6 +92,8 @@ void Receiver::update(ofEventArgs &e){
             ofxOscMessage m;
             getNextMessage( &m );
             
+            // SCENE EVENTS
+            // ------------
             if(m.getAddress() == SCENE_UPDATED || m.getAddress() == SCENE_UPDATED+"/" ) {
                 scene.age               = m.getArgAsInt32(0);
                 scene.percentCovered    = m.getArgAsFloat(1);
@@ -116,7 +103,8 @@ void Receiver::update(ofEventArgs &e){
                 scene.width             = m.getArgAsInt32(5);
                 scene.height            = m.getArgAsInt32(6);
             
-            // Custom event for dev
+            // CUSTOM EVENTS
+            // -------------
             } else if ( m.getAddress() == CUSTOM_EVENT || m.getAddress() == CUSTOM_EVENT+"/" ){
                 
                 CustomEventArgs evtArgs;
@@ -127,85 +115,87 @@ void Receiver::update(ofEventArgs &e){
                 }
                 
                 ofNotifyEvent(Events().customEvent, evtArgs, this);
-                
+            
+            // PERSON EVENTS
+            // -------------
             } else if (m.getAddress() == PERSON_ENTERED || m.getAddress() == PERSON_ENTERED+"/" ||
                 m.getAddress() == PERSON_UPDATED || m.getAddress() == PERSON_UPDATED+"/" ||
                 m.getAddress() == PERSON_LEAVING || m.getAddress() == PERSON_LEAVING+"/" ){
                 
                 int pid = m.getArgAsInt32(0);
-                bool personIsNew = false;
+                ofPoint centroid = ofPoint(m.getArgAsFloat(3), m.getArgAsFloat(4));
+                bool personExists = true;
                 
                 // Checking if the person already exist
                 Person* person = getPersonWithPID(pid);
-                
-                // Person does not already exist, we create it
+
+                // Person does not already exist
                 if(person == NULL){
-                    person = new Person(pid, trackedPeople.size());
-                    trackedPeople.push_back(person);
-                    personIsNew = true;
+                    personExists = false;
                 }
                 
-                updatePersonFromOSC(person, m);
-                person->setRemainingtime(personTimeout); // Timer init
-
                 // Send Event if need to be
                 EventArgs args;
-                args.person = person;
+                args.person = person;  // /!\ Take care to update this pointer in cases below if new person is created 
                 args.scene = &scene;
                 
                 // PERSON_ENTERED
-                if (m.getAddress() == PERSON_ENTERED || m.getAddress() == PERSON_ENTERED+"/" || personIsNew){
-                    
-                    // We send the event only if person is in the interactive area
-                    if(interactiveArea.contains(person->centroid)){
+                if (m.getAddress() == PERSON_ENTERED || m.getAddress() == PERSON_ENTERED+"/" || !personExists){
+
+                    // Create person if it is in interactive area
+                    if(interactiveArea.contains(centroid)){
+                        person = new Person(pid, trackedPeople.size());
+                        trackedPeople.push_back(person);
+                        
+                        updatePersonFromOSC(person, m);
+                        person->setRemainingtime(personTimeout); // Timer init
+                        
+                        args.person = person;   // Update pointer to person we just created
                         ofNotifyEvent(Events().personEntered, args, this);
-                        currentPeople.insert(std::pair<int, Person*>(person->pid, person));
                     }
-                } // PERSON_UPDATED
+
+                }
+                // PERSON_UPDATED
                 else if (m.getAddress() == PERSON_UPDATED || m.getAddress() == PERSON_UPDATED+"/" ){
-                    map<int, Person*>::iterator mapIterator;
-                    mapIterator = currentPeople.find(m.getArgAsInt32(0));
-                    // Check if the person exists in the scene
-                    bool personExists = (mapIterator != currentPeople.end());
-                    
-                    if(interactiveArea.contains(person->centroid)){
+                    // Check if the person is in the interactive area
+                    if(interactiveArea.contains(centroid)){
+                        // If person does not already exist, we create it
                         if(!personExists){
+                            person = new Person(pid, trackedPeople.size());
+                            trackedPeople.push_back(person);
+                            
+                            updatePersonFromOSC(person, m);
+                            person->setRemainingtime(personTimeout); // Timer init
+                            
+                            args.person = person;   // Update pointer to person we just created
                             ofNotifyEvent(Events().personEntered, args, this);
-                            currentPeople.insert(std::pair<int, Person*>(person->pid, person));
                         }
+                        // Else, the person already exists, we just update it
                         else{
+                            updatePersonFromOSC(person, m);
+                            person->setRemainingtime(personTimeout); // Timer init
+
                             ofNotifyEvent(Events().personUpdated, args, this);
                         }
-                    } else{
-                        // Else we have to act like that the person left
+                    }
+                    // Else we have to act like that the person left
+                    else{
                         if(personExists){
                             ofNotifyEvent(Events().personWillLeave, args, this);
-                            currentPeople.erase(mapIterator->second->pid);
+                            trackedPeople.erase(trackedPeople.begin() + getIndexOfPersonWithPID(pid));
+                            delete person;
                         } // If the person does not exist in the scene no need to do this again
                     }
                     
-                } // PERSON_LEAVING
-                
-                // TODO  : TOKILL ?
-                
-                /*else if (m.getAddress() == PERSON_LEAVING){
-                    
-                    // We send the event only if person is in the interactive area
-                    //ofNotifyEvent(Events().personWillLeave, args, this);
-                }*/
-                
-                if(m.getAddress() == PERSON_LEAVING || m.getAddress() == PERSON_LEAVING+"/" ){
-                    for (int i = trackedPeople.size() - 1; i >= 0; i--){
-                        if (trackedPeople[i]->pid == person->pid){
-                            if(interactiveArea.contains(person->centroid)){
-                                ofNotifyEvent(Events().personWillLeave, args, this);
-                            }
-                            trackedPeople.erase(trackedPeople.begin() + i);
-                            currentPeople.erase(person->pid);
-                            break;
-                        }
+                }
+                // PERSON_LEAVING
+                else if(m.getAddress() == PERSON_LEAVING || m.getAddress() == PERSON_LEAVING+"/" ){
+                    // If the person leaving was in the interactive area
+                    if(personExists){
+                        ofNotifyEvent(Events().personWillLeave, args, this);
+                        trackedPeople.erase(trackedPeople.begin() + getIndexOfPersonWithPID(pid));
+                        delete person;
                     }
-                    delete person;
                 }
             }
         }
@@ -240,6 +230,17 @@ Person* Receiver::getPersonWithPID(int pid)
         }
     }
     return NULL;
+}
+
+//--------------------------------------------------------------
+int Receiver::getIndexOfPersonWithPID(int pid)
+{
+    for (int i = 0; i < trackedPeople.size(); i++){
+        if (trackedPeople[i]->pid == pid){
+            return i;
+        }
+    }
+    return -1;
 }
 
 //--------------------------------------------------------------

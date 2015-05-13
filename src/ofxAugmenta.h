@@ -53,15 +53,14 @@ namespace Augmenta {
         
         Person* getPersonAtIndex(int i);
         Person* getPersonWithPID(int pid);
+        int getIndexOfPersonWithPID(int pid);
         ofPoint getSceneSize();
 
         InteractiveArea interactiveArea;
         ConnectionStatus status;
         Scene scene;
         
-        vector<Person*> currentPeopleArray;         /** Array of people in the interactive area */
-        vector<Person*> trackedPeople;         /** All people tracked in the whole scene */
-        map<int, Person*> currentPeople;         /** Map of people in the interactive area, accessible by unique id */
+        vector<Person*> trackedPeople;         /** All people tracked in the interactive area */
         
         int personTimeout;
     };
