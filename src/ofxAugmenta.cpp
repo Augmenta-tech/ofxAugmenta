@@ -14,6 +14,7 @@ Receiver::Receiver(){
     
     // Init
     personTimeout = 120; // frame
+    maxNumPeople = INT32_MAX;
     status = UNKNOWN;
 }
     
@@ -142,8 +143,8 @@ void Receiver::update(ofEventArgs &e){
                 // PERSON_ENTERED
                 if (m.getAddress() == PERSON_ENTERED || m.getAddress() == PERSON_ENTERED+"/" || !personExists){
 
-                    // Create person if it is in interactive area
-                    if(interactiveArea.contains(centroid)){
+                    // Create person if it is in interactive area and we did not reached limit 
+                    if(interactiveArea.contains(centroid) && trackedPeople.size()<maxNumPeople){
                         person = new Person(pid, trackedPeople.size());
                         trackedPeople.push_back(person);
                         
@@ -159,8 +160,8 @@ void Receiver::update(ofEventArgs &e){
                 else if (m.getAddress() == PERSON_UPDATED || m.getAddress() == PERSON_UPDATED+"/" ){
                     // Check if the person is in the interactive area
                     if(interactiveArea.contains(centroid)){
-                        // If person does not already exist, we create it
-                        if(!personExists){
+                        // If person does not already exist, we create it if we did not reached limit
+                        if(!personExists && trackedPeople.size()<maxNumPeople){
                             person = new Person(pid, trackedPeople.size());
                             trackedPeople.push_back(person);
                             
@@ -293,3 +294,8 @@ void Receiver::setTimeOut(int t)
     personTimeout = t;
 }
 
+//--------------------------------------------------------------
+void Receiver::setMaxNumPeople(int m)
+{
+    maxNumPeople = m;
+}

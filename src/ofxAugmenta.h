@@ -40,6 +40,7 @@ namespace Augmenta {
         void update( ofEventArgs &e );
         void draw( int width, int height );
         void setTimeOut(int t);
+        void setMaxNumPeople(int m);
         
         vector<Person*> & getPeople();
         inline Scene* getScene() {return &scene;}
@@ -63,6 +64,8 @@ namespace Augmenta {
         vector<Person*> trackedPeople;         /** All people tracked in the interactive area */
         
         int personTimeout;
+        
+        int maxNumPeople;  // Limit the number of people tracked
     };
 }
 
