@@ -84,18 +84,18 @@ void Person::draw(int _width, int _height){
     
     // Draw highest point
     ofSetColor(ofColor::purple);
-    ofCircle(highest.x* _width, highest.y* _height, 4);
+    ofDrawCircle(highest.x* _width, highest.y* _height, 4);
     
     // Draw centroid
     ofFill();
     ofSetColor(ofColor::white);
-    ofCircle(centroid.x* _width, centroid.y* _height, 8);
+    ofDrawCircle(centroid.x* _width, centroid.y* _height, 8);
     ofSetColor(genColorFromPID());
-    ofCircle(centroid.x* _width, centroid.y* _height, 5);
+    ofDrawCircle(centroid.x* _width, centroid.y* _height, 5);
    
     // Draw person
     ofNoFill();
-    ofRect(boundingRect.x* _width, boundingRect.y* _height, boundingRect.width* _width, boundingRect.height* _height);
+    ofDrawRectangle(boundingRect.x* _width, boundingRect.y* _height, boundingRect.width* _width, boundingRect.height* _height);
     
     // Draw pid oid age
     ofSetColor(ofColor::white);

@@ -91,7 +91,7 @@ void Receiver::update(ofEventArgs &e){
         while( hasWaitingMessages() ){
             // Get the next message
             ofxOscMessage m;
-            getNextMessage( &m );
+            getNextMessage(m);
             
             // SCENE EVENTS
             // ------------
