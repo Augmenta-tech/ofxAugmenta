@@ -27,7 +27,12 @@ void Receiver::connect(int port){
     }
     
     // Osc connection
-    setup(port);
+    
+    try{
+        setup(port);
+    } catch (std::exception&e){
+        ofLogWarning("setupOSC") << "Error : Couldn't bind to port "<< port << " ("<< ofToString(e.what()) << ")";
+    }
     status = CONNECTED; // TODO : Better ?
 }
 
