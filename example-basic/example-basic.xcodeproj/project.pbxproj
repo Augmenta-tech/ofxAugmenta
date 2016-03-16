@@ -10,8 +10,6 @@
 		A302035E1AFB725F0003055E /* IpEndpointName.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A30203381AFB725F0003055E /* IpEndpointName.cpp */; };
 		A302035F1AFB725F0003055E /* NetworkingUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A302033D1AFB725F0003055E /* NetworkingUtils.cpp */; };
 		A30203601AFB725F0003055E /* UdpSocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A302033E1AFB725F0003055E /* UdpSocket.cpp */; };
-		A30203611AFB725F0003055E /* NetworkingUtilsWin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A30203421AFB725F0003055E /* NetworkingUtilsWin.cpp */; };
-		A30203621AFB725F0003055E /* UdpSocketWin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A30203431AFB725F0003055E /* UdpSocketWin.cpp */; };
 		A30203631AFB725F0003055E /* OscOutboundPacketStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A30203481AFB725F0003055E /* OscOutboundPacketStream.cpp */; };
 		A30203641AFB725F0003055E /* OscPrintReceivedElements.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A302034B1AFB725F0003055E /* OscPrintReceivedElements.cpp */; };
 		A30203651AFB725F0003055E /* OscReceivedElements.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A302034D1AFB725F0003055E /* OscReceivedElements.cpp */; };
@@ -86,8 +84,6 @@
 		A302033E1AFB725F0003055E /* UdpSocket.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UdpSocket.cpp; sourceTree = "<group>"; };
 		A302033F1AFB725F0003055E /* TimerListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimerListener.h; sourceTree = "<group>"; };
 		A30203401AFB725F0003055E /* UdpSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UdpSocket.h; sourceTree = "<group>"; };
-		A30203421AFB725F0003055E /* NetworkingUtilsWin.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NetworkingUtilsWin.cpp; sourceTree = "<group>"; };
-		A30203431AFB725F0003055E /* UdpSocketWin.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UdpSocketWin.cpp; sourceTree = "<group>"; };
 		A30203451AFB725F0003055E /* MessageMappingOscPacketListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageMappingOscPacketListener.h; sourceTree = "<group>"; };
 		A30203461AFB725F0003055E /* OscException.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OscException.h; sourceTree = "<group>"; };
 		A30203471AFB725F0003055E /* OscHostEndianness.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OscHostEndianness.h; sourceTree = "<group>"; };
@@ -227,7 +223,6 @@
 				A302033C1AFB725F0003055E /* posix */,
 				A302033F1AFB725F0003055E /* TimerListener.h */,
 				A30203401AFB725F0003055E /* UdpSocket.h */,
-				A30203411AFB725F0003055E /* win32 */,
 			);
 			path = ip;
 			sourceTree = "<group>";
@@ -239,15 +234,6 @@
 				A302033E1AFB725F0003055E /* UdpSocket.cpp */,
 			);
 			path = posix;
-			sourceTree = "<group>";
-		};
-		A30203411AFB725F0003055E /* win32 */ = {
-			isa = PBXGroup;
-			children = (
-				A30203421AFB725F0003055E /* NetworkingUtilsWin.cpp */,
-				A30203431AFB725F0003055E /* UdpSocketWin.cpp */,
-			);
-			path = win32;
 			sourceTree = "<group>";
 		};
 		A30203441AFB725F0003055E /* osc */ = {
@@ -421,7 +407,7 @@
 		E4B69B4C0A3A1720003C02F2 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0630;
+				LastUpgradeCheck = 0700;
 			};
 			buildConfigurationList = E4B69B4D0A3A1720003C02F2 /* Build configuration list for PBXProject "example-basic" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -481,8 +467,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				A30203671AFB725F0003055E /* ofxOscBundle.cpp in Sources */,
-				A30203611AFB725F0003055E /* NetworkingUtilsWin.cpp in Sources */,
-				A30203621AFB725F0003055E /* UdpSocketWin.cpp in Sources */,
 				A302035F1AFB725F0003055E /* NetworkingUtils.cpp in Sources */,
 				A302036A1AFB725F0003055E /* ofxOscReceiver.cpp in Sources */,
 				A30203681AFB725F0003055E /* ofxOscMessage.cpp in Sources */,
@@ -519,10 +503,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E4EB6923138AFD0F00A09F29 /* Project.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(NATIVE_ARCH)";
 				CONFIGURATION_BUILD_DIR = "$(SRCROOT)/bin/";
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_AUTO_VECTORIZATION = YES;
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
 				GCC_ENABLE_SUPPLEMENTAL_SSE3_INSTRUCTIONS = YES;
@@ -540,7 +524,8 @@
 					src,
 					"$(OF_PATH)/addons/ofxOsc/libs/oscpack/src/**",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CPLUSPLUSFLAGS = (
 					"-D__MACOSX_CORE__",
 					"-lpthread",
@@ -554,7 +539,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E4EB6923138AFD0F00A09F29 /* Project.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(NATIVE_ARCH)";
 				CONFIGURATION_BUILD_DIR = "$(SRCROOT)/bin/";
 				COPY_PHASE_STRIP = YES;
 				DEAD_CODE_STRIPPING = YES;
@@ -576,7 +560,7 @@
 					src,
 					"$(OF_PATH)/addons/ofxOsc/libs/oscpack/src/**",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				OTHER_CPLUSPLUSFLAGS = (
 					"-D__MACOSX_CORE__",
 					"-lpthread",
@@ -667,6 +651,7 @@
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_51)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_52)",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = cc.openFrameworks.ofapp;
 				PRODUCT_NAME = "example-basicDebug";
 				WRAPPER_EXTENSION = app;
 			};
@@ -752,6 +737,7 @@
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_50)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_51)",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = cc.openFrameworks.ofapp;
 				PRODUCT_NAME = "example-basic";
 				WRAPPER_EXTENSION = app;
 			};
