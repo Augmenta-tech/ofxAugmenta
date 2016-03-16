@@ -32,8 +32,32 @@ void Receiver::connect(int port){
         setup(port);
     } catch (std::exception&e){
         ofLogWarning("setupOSC") << "Error : Couldn't bind to port "<< port << " ("<< ofToString(e.what()) << ")";
+        status = DISCONNECTED;
+        return;
     }
-    status = CONNECTED; // TODO : Better ?
+    
+    status = CONNECTED; 
+}
+
+//--------------------------------------------------------------
+bool Receiver::isConnected(){
+    
+    switch(status){
+        case UNKNOWN:
+        case CONNECTING:
+        case DISCONNECTED:
+            return false;
+            break;
+        
+        case CONNECTED:
+            return true;
+            break;
+            
+        default:
+            break;
+        
+    }
+    
 }
 
 //--------------------------------------------------------------

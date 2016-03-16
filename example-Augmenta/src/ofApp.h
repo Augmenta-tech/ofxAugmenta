@@ -7,7 +7,7 @@
 #include "ofxSyphon.h"
 #endif
 
-class testApp : public ofBaseApp{
+class ofApp : public ofBaseApp{
 	
     public:
     
@@ -36,7 +36,6 @@ class testApp : public ofBaseApp{
         bool m_bDebug;
         ofPoint m_MouseClick;
         int m_iPort;
-        std::string m_sOscPortDisplayMessage;
     
 #ifdef __APPLE__
     ofxSyphonServer m_oSyphonServer;

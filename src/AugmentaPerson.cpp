@@ -78,6 +78,12 @@ void Person::setCentroid( ofPoint _centroid, bool _dampen=false ){
 }
 
 //--------------------------------------------------------------
+void Person::draw(){
+    // dimensions from Augmenta are 0-1, so we multiply by current renderer width and height
+    draw(ofGetCurrentRenderer()->getViewportWidth(), ofGetCurrentRenderer()->getViewportHeight());
+}
+
+//--------------------------------------------------------------
 void Person::draw(int _width, int _height){
     
     ofSetColor(ofColor::yellow);

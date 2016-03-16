@@ -67,6 +67,7 @@ namespace Augmenta {
 		~Person();
         
         virtual void update();
+        virtual void draw();
         virtual void draw(int _width, int _height);
         
         // Getter

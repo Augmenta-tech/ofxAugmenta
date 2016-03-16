@@ -37,6 +37,7 @@ namespace Augmenta {
         Receiver();
         
         void connect( int port );
+        bool isConnected();
         void update( ofEventArgs &e );
         void draw( int width, int height );
         void setTimeOut(int t);

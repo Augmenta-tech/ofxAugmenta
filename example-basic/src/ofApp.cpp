@@ -25,11 +25,6 @@ void ofApp::draw(){
     vector<Augmenta::Person*> people = AugmentaReceiver.getPeople();
     
     for (int i=0; i<people.size(); i++){
-        
-        ofPoint centroid = people[i]->centroid;
-        centroid.x *= ofGetWidth();
-        centroid.y *= ofGetHeight();
-        
-        ofCircle(centroid, 10);
+        people[i]->draw();
     }
 }

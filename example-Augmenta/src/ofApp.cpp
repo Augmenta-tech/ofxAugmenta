@@ -5,7 +5,7 @@
 #define OSC_PORT 12000
 
 //--------------------------------------------------------------
-void testApp::setup(){
+void ofApp::setup(){
     
     // Init
     
@@ -16,14 +16,7 @@ void testApp::setup(){
     
     ofBackground(ofColor::black);
     
-    m_sOscPortDisplayMessage = "Listening to OSC on port " + ofToString(m_iPort);
-    
-    try {
-        m_auReceiver.connect(m_iPort);
-    } catch (std::exception&e) {
-        std::cerr << "Error : " << e.what() << endl;
-        m_sOscPortDisplayMessage = "Could not bind to port " + ofToString(m_iPort) + " !";
-    }
+    m_auReceiver.connect(m_iPort);
     
     ofxAddAugmentaListeners(this);
     
@@ -37,7 +30,7 @@ void testApp::setup(){
 }
 
 //--------------------------------------------------------------
-void testApp::update(){
+void ofApp::update(){
     
     // Get the person data
     vector<Augmenta::Person*> people = m_auReceiver.getPeople();
@@ -52,7 +45,7 @@ void testApp::update(){
 }
 
 //--------------------------------------------------------------
-void testApp::draw(){
+void ofApp::draw(){
     
     // Get the person data
     vector<Augmenta::Person*> people = m_auReceiver.getPeople();
@@ -66,7 +59,7 @@ void testApp::draw(){
     ofSetLineWidth(3);
     ofSetColor(ofColor::blue);
     for(int i=0; i<people.size(); ++i) {
-        ofCircle(people[i]->centroid.x* ofGetWidth(), people[i]->centroid.y* ofGetHeight(), 15);
+        ofDrawCircle(people[i]->centroid.x* ofGetWidth(), people[i]->centroid.y* ofGetHeight(), 15);
     }
     ofPopStyle();
     
@@ -83,7 +76,7 @@ void testApp::draw(){
         m_oSyphonServer.publishScreen();
 #endif
         
-        ofDrawBitmapString("[drag mouse] to set interactive area\n[right click] to reset", ofPoint(10,10));
+        ofDrawBitmapString("[drag mouse] to set interactive area\n[right click] to reset", 10,20);
 
     } else {
 
@@ -91,12 +84,20 @@ void testApp::draw(){
         m_oSyphonServer.publishScreen();
 #endif
         
-        ofDrawBitmapString(m_sOscPortDisplayMessage + "\n[d] to show debug", ofPoint(10,10));
+        ofPushStyle();
+        ofDrawBitmapString("OSC port : \n[d] to show debug", 10, 20);
+        if(m_auReceiver.isConnected()){
+            ofSetColor(ofColor::green);
+        } else {
+            ofSetColor(ofColor::red);
+        }
+        ofDrawBitmapString(ofToString(m_iPort), 100, 20);
+        ofPopStyle();
     }
 }
 
 //--------------------------------------------------------------
-void testApp::onPersonEntered( Augmenta::EventArgs & augmentaEvent ){
+void ofApp::onPersonEntered( Augmenta::EventArgs & augmentaEvent ){
     
     ofLog(OF_LOG_NOTICE, "New person!");
     
@@ -105,7 +106,7 @@ void testApp::onPersonEntered( Augmenta::EventArgs & augmentaEvent ){
 }
 
 //--------------------------------------------------------------
-void testApp::onPersonUpdated( Augmenta::EventArgs & augmentaEvent ){
+void ofApp::onPersonUpdated( Augmenta::EventArgs & augmentaEvent ){
     
     //ofLog(OF_LOG_NOTICE, "Person updated!");
     
@@ -114,7 +115,7 @@ void testApp::onPersonUpdated( Augmenta::EventArgs & augmentaEvent ){
 }
 
 //--------------------------------------------------------------
-void testApp::onPersonWillLeave( Augmenta::EventArgs & augmentaEvent ){
+void ofApp::onPersonWillLeave( Augmenta::EventArgs & augmentaEvent ){
     
     ofLog(OF_LOG_NOTICE, "Person left!");
 
@@ -123,7 +124,7 @@ void testApp::onPersonWillLeave( Augmenta::EventArgs & augmentaEvent ){
 }
 
 //--------------------------------------------------------------
-void testApp::keyPressed(int key){
+void ofApp::keyPressed(int key){
 
     if(key == 'd' || key == 'D'){
         
@@ -132,17 +133,17 @@ void testApp::keyPressed(int key){
 }
 
 //--------------------------------------------------------------
-void testApp::keyReleased(int key){
+void ofApp::keyReleased(int key){
 
 }
 
 //--------------------------------------------------------------
-void testApp::mouseMoved(int x, int y){
+void ofApp::mouseMoved(int x, int y){
 
 }
 
 //--------------------------------------------------------------
-void testApp::mouseDragged(int x, int y, int button){
+void ofApp::mouseDragged(int x, int y, int button){
     
     if (m_bDebug){
         
@@ -165,7 +166,7 @@ void testApp::mouseDragged(int x, int y, int button){
 }
 
 //--------------------------------------------------------------
-void testApp::mousePressed(int x, int y, int button){
+void ofApp::mousePressed(int x, int y, int button){
 
     if (m_bDebug){
         
@@ -184,21 +185,21 @@ void testApp::mousePressed(int x, int y, int button){
 }
 
 //--------------------------------------------------------------
-void testApp::mouseReleased(int x, int y, int button){
+void ofApp::mouseReleased(int x, int y, int button){
 
 }
 
 //--------------------------------------------------------------
-void testApp::windowResized(int w, int h){
+void ofApp::windowResized(int w, int h){
 
 }
 
 //--------------------------------------------------------------
-void testApp::gotMessage(ofMessage msg){
+void ofApp::gotMessage(ofMessage msg){
 
 }
 
 //--------------------------------------------------------------
-void testApp::dragEvent(ofDragInfo dragInfo){ 
+void ofApp::dragEvent(ofDragInfo dragInfo){
 
 }
