@@ -26,7 +26,7 @@ void InteractiveArea::draw(){
     ofPushStyle();
     ofNoFill();
     ofSetColor(ofColor(ofColor::red));
-    ofSetLineWidth(3);
+    ofSetLineWidth(2);
     ofDrawRectangle(area.x*ofGetWidth(), area.y*ofGetHeight(), area.width*ofGetWidth(), area.height*ofGetHeight());
     ofPopStyle();
 }
