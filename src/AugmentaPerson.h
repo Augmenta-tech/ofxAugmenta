@@ -79,6 +79,9 @@ namespace Augmenta {
         virtual void setBoundingRect( ofRectangle _rect );
         virtual void setCentroid( ofPoint _centroid, bool dampen );
         
+        // Smooth values
+        void smooth(float amount);
+        
         // Members
         int pid;
         int oid;
@@ -88,6 +91,12 @@ namespace Augmenta {
         float depth; // Not implemented yet
 		ofRectangle boundingRect;
         ofPoint highest;
+        
+        // Members stored from last frame
+        ofPoint lastCentroid;
+        float lastDepth;
+        ofRectangle lastBoundingRect;
+        ofPoint lastHighest;
 
     private:
         

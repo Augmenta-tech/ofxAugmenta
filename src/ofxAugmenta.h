@@ -42,6 +42,7 @@ namespace Augmenta {
         void draw( int width, int height );
         void setTimeOut(int t);
         void setMaxNumPeople(int m);
+        void setSmooth(float amount);
         
         vector<Person*> & getPeople();
         inline Scene* getScene() {return &scene;}
@@ -67,6 +68,8 @@ namespace Augmenta {
         int personTimeout;
         
         int maxNumPeople;  // Limit the number of people tracked
+        
+        float smoothAmount;
     };
 }
 

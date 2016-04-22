@@ -242,6 +242,11 @@ void Receiver::updatePersonFromOSC( Person * p, ofxOscMessage & m ){
     p->depth = m.getArgAsFloat(7);
     p->boundingRect.set(m.getArgAsFloat(8),m.getArgAsFloat(9),m.getArgAsFloat(10),m.getArgAsFloat(11));
     p->highest.set(m.getArgAsFloat(12), m.getArgAsFloat(13), m.getArgAsFloat(14));
+    
+    if(smoothAmount != 0){
+        p->smooth(smoothAmount);
+    }
+    
 }
 
 //--------------------------------------------------------------
@@ -327,4 +332,17 @@ void Receiver::setTimeOut(int t)
 void Receiver::setMaxNumPeople(int m)
 {
     maxNumPeople = m;
+}
+
+//--------------------------------------------------------------
+void Receiver::setSmooth(float amount)
+{
+    // Check amount bounds
+    if(amount < 0){
+        smoothAmount = 0;
+    } else if(amount > 0.99){
+        smoothAmount = 0.99f;
+    } else {
+        smoothAmount = amount;
+    }
 }

@@ -142,3 +142,25 @@ ofColor Person::genColorFromPID()
     
     return color;
 }
+
+//--------------------------------------------------------------
+void Person::smooth(float amount){
+    
+    // Apply smooth
+    depth = depth*(1-amount) + lastDepth * amount;
+    centroid = centroid*(1-amount) + lastCentroid * amount;
+    highest = highest*(1-amount) + lastHighest * amount;
+    boundingRect.position = boundingRect.position*(1-amount) + boundingRect.position * amount;
+    boundingRect.width = boundingRect.width*(1-amount) + boundingRect.width * amount;
+    boundingRect.height = boundingRect.height*(1-amount) + boundingRect.height * amount;
+    
+    // Recalculate smoothed velocity
+    velocity = centroid - lastCentroid;
+    
+    // Save current values as last values for next frame
+    lastDepth = depth;
+    lastCentroid = centroid;
+    lastHighest = highest;
+    lastBoundingRect = boundingRect;
+    
+}
