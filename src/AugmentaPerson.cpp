@@ -150,9 +150,9 @@ void Person::smooth(float amount){
     depth = depth*(1-amount) + lastDepth * amount;
     centroid = centroid*(1-amount) + lastCentroid * amount;
     highest = highest*(1-amount) + lastHighest * amount;
-    boundingRect.position = boundingRect.position*(1-amount) + boundingRect.position * amount;
-    boundingRect.width = boundingRect.width*(1-amount) + boundingRect.width * amount;
-    boundingRect.height = boundingRect.height*(1-amount) + boundingRect.height * amount;
+    boundingRect.position = boundingRect.position*(1-amount) + lastBoundingRect.position * amount;
+    boundingRect.width = boundingRect.width*(1-amount) + lastBoundingRect.width * amount;
+    boundingRect.height = boundingRect.height*(1-amount) + lastBoundingRect.height * amount;
     
     // Recalculate smoothed velocity
     velocity = centroid - lastCentroid;
