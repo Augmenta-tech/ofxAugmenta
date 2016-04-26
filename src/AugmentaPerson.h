@@ -62,7 +62,7 @@ namespace Augmenta {
         
         // Methods
         Person();
-        Person(int _id, int _oid, int _age, float _depth, ofPoint _centroid, ofPoint _velocity, ofRectangle _boundingRect, float _highestX, float _highestY, float _highestZ);
+        Person(int _pid, int _oid, int _age, float _depth, ofPoint _centroid, ofPoint _velocity, ofRectangle _boundingRect, float _highestX, float _highestY, float _highestZ);
         Person( int pid, int oid );
 		~Person();
         
