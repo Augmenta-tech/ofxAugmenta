@@ -146,16 +146,21 @@ ofColor Person::genColorFromPID()
 //--------------------------------------------------------------
 void Person::smooth(float amount){
     
-    // Apply smooth
-    depth = depth*(1-amount) + lastDepth * amount;
-    centroid = centroid*(1-amount) + lastCentroid * amount;
-    highest = highest*(1-amount) + lastHighest * amount;
-    boundingRect.position = boundingRect.position*(1-amount) + lastBoundingRect.position * amount;
-    boundingRect.width = boundingRect.width*(1-amount) + lastBoundingRect.width * amount;
-    boundingRect.height = boundingRect.height*(1-amount) + lastBoundingRect.height * amount;
+    // Check if "last" values have been initialized
+    if(lastDepth != 0 && lastCentroid != ofPoint() && lastHighest != ofPoint() && lastBoundingRect != ofRectangle()){
     
-    // Recalculate smoothed velocity
-    velocity = centroid - lastCentroid;
+        // Apply smooth
+        depth = depth*(1-amount) + lastDepth * amount;
+        centroid = centroid*(1-amount) + lastCentroid * amount;
+        highest = highest*(1-amount) + lastHighest * amount;
+        boundingRect.position = boundingRect.position*(1-amount) + lastBoundingRect.position * amount;
+        boundingRect.width = boundingRect.width*(1-amount) + lastBoundingRect.width * amount;
+        boundingRect.height = boundingRect.height*(1-amount) + lastBoundingRect.height * amount;
+        
+        // Recalculate smoothed velocity
+        velocity = centroid - lastCentroid;
+        
+    }
     
     // Save current values as last values for next frame
     lastDepth = depth;
