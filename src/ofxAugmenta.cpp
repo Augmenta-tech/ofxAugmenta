@@ -292,6 +292,12 @@ Person* Receiver::getOldestPerson(){
             bestAge = currentPeople[i]->age;
             bestPerson = i;
         }
+        // If several persons have the same oldest age, take the one with smallest pid
+        else if(currentPeople[i]->age == bestAge){
+            if(currentPeople[i]->pid < currentPeople[bestPerson]->pid){
+                bestPerson = i;
+            }
+        }
     }
     Person* p = NULL;
     if(bestPerson != -1){
@@ -313,6 +319,12 @@ Person* Receiver::getNewestPerson(){
         if(currentPeople[i]->age < bestAge){
             bestAge = currentPeople[i]->age;
             bestPerson = i;
+        }
+        // If several persons have the same newest age, take the one with greatest pid
+        else if(currentPeople[i]->age == bestAge){
+            if(currentPeople[i]->pid > currentPeople[bestPerson]->pid){
+                bestPerson = i;
+            }
         }
     }
     Person* p = NULL;
